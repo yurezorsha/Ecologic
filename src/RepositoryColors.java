@@ -11,6 +11,10 @@ public class RepositoryColors {
 	private ArrayList<Integer> colorG = new ArrayList<Integer>(); 
 	private ArrayList<Integer> colorB = new ArrayList<Integer>(); 
 
+	public RepositoryColors() {
+		LoadFromFile();
+	}
+
 	public void LoadFromFile() {
 		BufferedReader br = null;
 		FileReader fr = null;
