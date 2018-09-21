@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -17,11 +18,15 @@ public class Map extends JPanel {
 		this.setPreferredSize(new Dimension(cols * size_field, rows * size_field));
         this.size_field = size_field;
         matrix = new Field[rows][cols];
+        int cnt = 0;
+        CreateMap cm = new CreateMap();
+        int[]  pixels = cm.createMap(rows, cols);
         for (int i = 0; i < matrix.length; ++i)
         {
             for (int j = 0; j < matrix[i].length; ++j)
             {
-                matrix[i][j] = new Field();
+                matrix[i][j] = new Field(new Color(pixels[cnt]));
+                cnt++;
             }
         }
 	}

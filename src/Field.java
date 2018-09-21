@@ -11,13 +11,13 @@ public class Field {
 	
 	
 	public Field() {
-		RepositoryColors r = new RepositoryColors();
-		R = r.getColorR().get(0);
-		G = r.getColorG().get(0);
-		B = r.getColorB().get(0);
-		System.out.println("R: " + R + " G: " + G + " B: " + B);
 	}
 
+	
+	public Field(Color c) {
+		this.color = c;
+	}
+	
 	public Field(Color color, double height, int x, int y, TypeField type) {
 		this.color = color;
 		this.height = height;
@@ -27,8 +27,6 @@ public class Field {
 	}
 
 	public Color getColor() {
-		color = new Color(R, G, B);
-
 		return color;
 	}
 

@@ -5,12 +5,18 @@ import javax.swing.JFrame;
 
 public class Main {
 
+	private static final int size = 10;
+	
 public static void main(String[] args) {
 		
 	RepositoryColors r = new RepositoryColors();
 	r.LoadFromFile();
+	int w = 128; 
+	int h = 128;
 	
-		final Map map = new Map(10, 15, 80);
+	
+	
+		final Map map = new Map(w, h, size);
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(map);
         frame.pack();
@@ -20,8 +26,8 @@ public static void main(String[] args) {
 
             @Override
 			public void mouseMoved(MouseEvent e) {
-                int x = e.getX() / 80;
-                int y = e.getY() / 80;
+                int x = e.getX() / size;
+                int y = e.getY() / size;
                 map.highlight(x, y);
             }
 		});
