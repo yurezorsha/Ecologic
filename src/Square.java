@@ -7,7 +7,7 @@ public class Square {
 
 
     public enum Biome{
-        PLAIN, FOREST, RIVER, SWAMP, MOUNT, SITY;
+        PLAIN, FOREST, RIVER, SWAMP, MOUNT, SITY
     }
 
     public Square(){
@@ -30,9 +30,7 @@ public class Square {
         return y;
     } public double getH(){
         return h;
-    } public void setH(double h){
-        this.h = h;
-    } public Biome getBio(){
+    } public void setH(double h){ this.h = h; } public Biome getBio(){
         return bio;
     } public void setBio(Biome bio) {
         this.bio = bio;
