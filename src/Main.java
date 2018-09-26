@@ -1,37 +1,80 @@
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class Main {
 
-	private static final int size = 10;
-	
 public static void main(String[] args) {
-		
-	RepositoryColors r = new RepositoryColors();
-	r.LoadFromFile();
-	int w = 128; 
-	int h = 128;
-	
-	
-	
-		final Map map = new Map(w, h, size);
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(map);
-        frame.pack();
-		frame.setVisible(true);
-		
-		map.addMouseMotionListener(new MouseAdapter() {
 
-            @Override
+	int gridSize = 50;
+	Terrain terrain = new Terrain(800, 400, gridSize);
+	JFrame frame = new JFrame();
+	JLabel label = new JLabel();
+	label.setForeground(Color.red);
+	frame.getContentPane().add(terrain);
+	frame.pack();
+	frame.setVisible(true);
+
+
+	terrain.setLayout(new FlowLayout());
+	terrain.add(label);
+
+	terrain.addMouseMotionListener(new MouseAdapter() {
+		@Override
 			public void mouseMoved(MouseEvent e) {
-                int x = e.getX() / size;
-                int y = e.getY() / size;
-                map.highlight(x, y);
-            }
+                int x = e.getX() ;
+                int y = e.getY();
+                terrain.pickFiled(x, y, label);
+  	          }
 		});
-		
+	// :(
+	terrain.addMouseListener(new MouseListener() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			terrain.stopHighlight();
+		}
+	});
+
+
+
+
+	frame.addKeyListener(new KeyListener() {
+		@Override
+		public void keyTyped(KeyEvent e) {
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if(e.getKeyChar() == 'v')
+				terrain.zoom(10);
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+		}
+	});
 	}
-	
+
+
 }
