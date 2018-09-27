@@ -44,32 +44,28 @@ public class Square {
     }
 
     public Color getColor(){
-        /*double col = height;///2f+0.065f; //from ~0 to ~0.5
-        float moist = (float)(height * 2 - 1) / 8;*/
+            switch (bio) {
+                case RIVER:
+                    return Color.decode("#41C4EB");
+                case DESERT:
+                    return Color.decode("#EDC9AF");
+                case PLAIN:
+                    return Color.decode("#49b484");
+                case FOREST:
+                    return Color.decode("#228B22");
+                case BRUSH:
+                    return Color.decode("#7d8e74");
+                case TAIGA:
+                    return Color.decode("#808000");
+                case MOUNT:
+                    return Color.decode("#977c53");
+                case SNOW:
+                    return Color.WHITE;
+                case SITY:
 
-        switch (bio){
-            case RIVER:
-                return Color.decode("#41C4EB");
-                // #41C4EB");
-            case DESERT:
-                return Color.decode("#EDC9AF");
-            case PLAIN:
-                return Color.decode("#49b484");
-            case FOREST:
-                return Color.decode("#228B22");
-            case BRUSH:
-                return Color.decode("#7d8e74");
-            case TAIGA:
-                return Color.decode("#808000");
-            case MOUNT:
-                return Color.decode("#977c53");
-            case SNOW:
-                return Color.WHITE;
-            case SITY:
-
-            default:
-                return Color.getHSBColor((float) height, .7f, .535f);
-        }
+                default:
+                    return Color.getHSBColor((float) height, .7f, .535f);
+            }
     }
 
 
@@ -108,7 +104,8 @@ public class Square {
                 bio = Biome.TAIGA;
             else
                 bio = Biome.MOUNT;
-        }
+        } else
+            bio = Biome.SNOW;
 
     }
 
