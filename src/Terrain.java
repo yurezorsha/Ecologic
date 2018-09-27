@@ -10,6 +10,7 @@ public class Terrain extends JPanel {
     private int height, width;
     private int seed;
 
+
     public Terrain(int rows, int cols, int gridSize) {
         this.setPreferredSize(new Dimension(rows, cols));
         this.gridSize = gridSize;
@@ -24,9 +25,23 @@ public class Terrain extends JPanel {
         }
     }
 
+    private void addRivers(int count){
+
+    }
+
+    public int mode = 3;
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if(mode%3 == 2)
+            showHei(g);
+        else if(mode%3 == 1)
+            showMoi(g);
+        else
+            draw(g);
+    }
+
+    public void draw(Graphics g){
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if(i% gridSize == 0 || j% gridSize == 0)
@@ -40,10 +55,30 @@ public class Terrain extends JPanel {
         }
     }
 
-    public int getTSS(int value){
+    public void showMoi (Graphics g) {
+        System.out.println("Moist");
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                g.setColor(Color.getHSBColor((float)squares[i][j].getMoist(), .5f, .5f));
+                g.fillRect(i,j,1,1);
+            }
+        }
+    }
+
+    public void showHei (Graphics g) {
+        System.out.println("Height");
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                g.setColor(Color.getHSBColor((float)squares[i][j].getHeight(), .5f, .5f));
+                g.fillRect(i,j,1,1);
+            }
+        }
+    }
+
+    private int getTSS(int value){
         return Math.round(value/ gridSize)* gridSize;
     }
-    public int getToSquareSize(int value){
+    private int getToSquareSize(int value){
         return Math.round(value/ gridSize)* gridSize;
     }
 
@@ -52,7 +87,7 @@ public class Terrain extends JPanel {
     public void pickFiled(int x, int y, JLabel label) {
         hX = getToSquareSize(x);
         hY = getToSquareSize(y);
-        label.setText(String.format("h - %g", squares[x][y].getH()));
+        label.setText(String.format("%s", squares[x][y].getBio()));
         hightlight = true;
         repaint();
     }
@@ -70,11 +105,13 @@ public class Terrain extends JPanel {
                             someSq[l][k] = squares[i+l][j+k];
                         }
                     }
-                    //TODO averange возрвращает экавщавыщлзавщз класса
-                    double sqH =  Square.averange(someSq);
+                    //TODO функции считают только height и biome
+                    double sqH =  Square.averangeHeight(someSq);
+                    Biome sqB = Square.averangeBiome(someSq);
                     for (int l = 0; l < scale; l++) {
                         for (int k = 0; k < scale; k++) {
-                            squares[i+l][j+k].setH(sqH);
+                            squares[i+l][j+k].setHeight(sqH);
+                            squares[i+l][j+k].setBio(sqB);
                         }
                     }
                     System.out.println(String.format("Done for i = %d, j = %d", i, j));

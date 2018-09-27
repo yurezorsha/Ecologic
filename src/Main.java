@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 
 import javax.swing.*;
 
@@ -15,10 +16,9 @@ public static void main(String[] args) {
 	frame.getContentPane().add(terrain);
 	frame.pack();
 	frame.setVisible(true);
-
-
 	terrain.setLayout(new FlowLayout());
 	terrain.add(label);
+
 
 	terrain.addMouseMotionListener(new MouseAdapter() {
 		@Override
@@ -56,9 +56,6 @@ public static void main(String[] args) {
 		}
 	});
 
-
-
-
 	frame.addKeyListener(new KeyListener() {
 		@Override
 		public void keyTyped(KeyEvent e) {
@@ -68,6 +65,10 @@ public static void main(String[] args) {
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyChar() == 'v')
 				terrain.zoom(10);
+			if(e.getKeyChar() == 'c'){
+                terrain.mode++;
+                terrain.repaint();
+            }
 		}
 
 		@Override
@@ -75,6 +76,7 @@ public static void main(String[] args) {
 		}
 	});
 	}
+
 
 
 }

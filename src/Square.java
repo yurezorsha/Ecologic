@@ -1,14 +1,14 @@
 import java.awt.Color;
+import java.util.Random;
 
 public class Square {
-    private double h;
+    private double height;
+    private double moist;
     private int x, y;
     private Biome bio;
 
 
-    public enum Biome{
-        PLAIN, FOREST, RIVER, SWAMP, MOUNT, SITY
-    }
+
 
     public Square(){
         System.out.println("f u");
@@ -19,51 +19,122 @@ public class Square {
         this.x = x;
         this.y = y;
         calcHeight(seed);
-
-        //TODO биомы
-        bio = Biome.PLAIN;
+        calcMoinst(seed);
+        setBio();
     }
+
+
 
     public int getX() {
         return x;
     } public int getY(){
         return y;
-    } public double getH(){
-        return h;
-    } public void setH(double h){ this.h = h; } public Biome getBio(){
+    } public double getHeight (){
+        return height;
+    } public void setHeight (double height){
+        this.height = height;
+    } public Biome getBio(){
         return bio;
     } public void setBio(Biome bio) {
         this.bio = bio;
+    } public double getMoist () {
+        return moist;
+    } public void setMoist(double moist){
+        this.moist = moist;
     }
-
 
     public Color getColor(){
-        double col = h/2f+0.065f; //from ~0 to ~0.5
-        if(col>0.4f){
-            return Color.getHSBColor((float)col+.18f, .7f, .8f);
-        } else if(col < 0.25f){
-            return Color.getHSBColor((float)col+.5f, .03f, .235f);
+        /*double col = height;///2f+0.065f; //from ~0 to ~0.5
+        float moist = (float)(height * 2 - 1) / 8;*/
+
+        switch (bio){
+            case RIVER:
+                return Color.decode("#41C4EB");
+                // #41C4EB");
+            case DESERT:
+                return Color.decode("#EDC9AF");
+            case PLAIN:
+                return Color.decode("#49b484");
+            case FOREST:
+                return Color.decode("#228B22");
+            case BRUSH:
+                return Color.decode("#7d8e74");
+            case TAIGA:
+                return Color.decode("#808000");
+            case MOUNT:
+                return Color.decode("#977c53");
+            case SNOW:
+                return Color.WHITE;
+            case SITY:
+
+            default:
+                return Color.getHSBColor((float) height, .7f, .535f);
         }
-        return Color.getHSBColor((float)col, .7f, .8f);
     }
 
-    private double scale = .007;
-    private double pers = .3;
-    public void calcHeight(int seed){
-        float res = (float)SimplexNoise.sumOctave(16, x, y, seed, pers, scale);
-        h = (res+1)/2;
+
+    private void calcHeight(int seed){
+        double scale = .007;
+        double pers = .3;
+        height = SimplexNoise.sumOctave(16, x, y, seed, pers, scale);
+        height = (height+1)/2;
     }
 
-    static double averange( Square[][] s){
+    private void calcMoinst (int seed) {
+        double scale = .004;
+        double pers = .3;
+        seed = seed;
+        moist = SimplexNoise.sumOctave(16, x, y, seed, pers, scale);
+        moist = (moist+1)/2;
+    }
+
+    public void setBio(){
+        //TODO биомы нормально
+        if(height < .3f){
+                bio = Biome.RIVER;
+        }
+        else if(height < .5f){
+            if(moist < .3f)
+                bio = Biome.DESERT;
+            else
+                bio = Biome.PLAIN;
+        } else if(height < .7f){
+            if(moist < .5f)
+                bio = Biome.BRUSH;
+            else
+                bio = Biome.FOREST;
+        } else if(height < .9f){
+            if(moist < .5f)
+                bio = Biome.TAIGA;
+            else
+                bio = Biome.MOUNT;
+        }
+
+    }
+
+
+
+    static double averangeHeight (Square[][] s){
         int numberSq = s.length;
         double av = 0;
         for (int i = 0; i < numberSq; i++) {
             for (int j = 0; j < numberSq; j++) {
-                av += s[i][j].getH();
+                av += s[i][j].getHeight();
             }
         }
         av /= (numberSq*numberSq);
         return av;
+    }
+
+    static Biome averangeBiome(Square[][] s){
+        int len = s.length;
+        Biome[] bio = new Biome[len * len];
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len; j++) {
+                bio[i*len+j] = s[i][j].getBio();
+            }
+        }
+        return Biome.maxBiome(bio);
     }
 
 
