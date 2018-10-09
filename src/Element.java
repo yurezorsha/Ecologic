@@ -2,9 +2,14 @@
 public class Element {
 	private String code;
 	private String name;
-	private Double MPC;
-	private Double mass;
+	private double MPC;
+	private double mass;
 	private boolean hot;
+	private double cm;
+	private static double A=160;
+	private double F;
+	private static double np=1;
+	private double uz;
 	
 	
 	public Element() {
@@ -15,9 +20,33 @@ public class Element {
     	this.name=name;
 		
 	}
+    
+    
+	public double getCm() {
+		return cm;
+	}
 	
 	
+
+	public double getUz() {
+		return uz;
+	}
+
+	public void setUz() {
+		this.uz = cm/MPC;
+	}
+
+	public void setCm(double n, double m, double kF, double h, double delT, double v1, double d) {
+		if(hot==true){
+			this.cm=A * mass * n * m * kF * np /(Math.pow(h, 2) * Math.pow(v1 * delT,1/3));
+		} else{
+			this.cm=A * mass * n * kF * np * d / (8 * Math.pow(h, 4/3) * v1); 
+		}
 	
+	}
+	
+	
+
 	public Element(String code, String name, Double mPC, Double mass,
 			boolean hot) {
 		super();

@@ -72,6 +72,7 @@ public class ExcelParser {
     Iterator<Row> rowIterator = sheet.iterator();
     Double n=null;
 	String s=null;
+	Boolean b=null;
     LinkedList<Element> elements=new LinkedList();
     //System.out.println("Names: "+ workbook.getSheetName(0));
     while (rowIterator.hasNext()) {
@@ -86,15 +87,17 @@ public class ExcelParser {
 
             // Change to getCellType() if using POI 4.x
             CellType cellType =cell.getCellType() ;
-            if(n!=null && s!=null){
+            if(n!=null && s!=null && b!=null){
             	Element elem =new Element();
             	elem.setCode(s);
             	elem.setMass(n);
- 
-            	elem.setName(catalog.getElementByCode(s).getName());	
+                elem.setHot(b);
+            	elem.setName(catalog.getElementByCode(s).getName());
+            	elem.setMPC(catalog.getElementByCode(elem.getCode()).getMPC());
             	elements.add(elem);
             	n=null;
             	s=null;
+            	b=null;
             	
             }
             
@@ -104,6 +107,7 @@ public class ExcelParser {
                 System.out.print("\t");
                 break;
             case BOOLEAN:
+            	b=cell.getBooleanCellValue();
                 System.out.print(cell.getBooleanCellValue());
                 System.out.print("\t");
                 break;
