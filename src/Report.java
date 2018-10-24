@@ -1,6 +1,9 @@
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -8,12 +11,14 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 
 public class Report extends JFrame{
   private Company c;
+  private Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
 
   public Report(Company c) throws HeadlessException {
 	super();
@@ -22,27 +27,138 @@ public class Report extends JFrame{
   }
   
   private void initFrame(){
-	  LinkedList<Element> elements=c.getElements();
-      Iterator iterator = elements.iterator();
-      setSize(1050, 650);
-      JLabel l;
-      JLabel t;
-      JLabel uz;
-      JLabel mpc;
+	     
+      setLayout(new FlowLayout());
+      setSize(1030, 800);
+      
+      
       //setLayout();
       JPanel p1 = new JPanel();
-      //p1.setBounds(10, 10, 400, 600);
-      p1.setLayout(new GridLayout(0,4));
+      p1.setBounds(10, 10, 1000, 600);
+      JPanel p2 =new JPanel();
+      createTable(p1);
+      p2.setBounds(10, 620, 350, 100);
+      String[] s= {getUz(c.checkSum1()),getUz(c.checkSum2()),getUz(c.checkSum3()), getUz(c.checkSum4()), getUz(c.checkSum5())};
+      createTableUz(p2, s); 
+      JPanel p3 = new JPanel();
+      p3.setBounds(380,620,350,100);
+      createTableX(p3);
+      
+      
+      JPanel p0=new JPanel();
+      p0.setPreferredSize(new Dimension(600,800));
+      
+      p0.setBounds(0, 0, 980, 700);
+      p0.setLayout(null); 
+      p0.add(p1);
+      p0.add(p2);
+      p0.add(p3);
+      JScrollPane scrollBar = new JScrollPane(p0, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+      //scrollBar.setBounds(0, 0, 1000, 700);
+      scrollBar.setPreferredSize(new Dimension(1000,700));
+      
+           
+      add(scrollBar);
+
+      
+  }
+  
+  
+  public String getUz(ArrayList<String> names){
+	 String str="";
+ 	 String str2 ="УЗсумм(";
+ 	 double sumuz = 0;
+	  if(!names.isEmpty()){
+	    	 	    	 
+	         ArrayList<String> lst=names;
+	         for (String code: lst) {
+	        	   Element e = this.c.getElementByCode(code);
+	        	   System.out.println(e.getUz());
+
+				   sumuz+= e.getUz(); 
+				   str2+= e.getCode()+" ";
+			 }
+	         str+=str2 +") = "+ sumuz +"\n";
+	         
+	         }
+	  else {str="";}
+	  System.out.println(str);
+	  return str;
+  }
+  
+  
+  public void createTableUz(JPanel p,String[] s){
+	  boolean b= false;
+	  int i=0;
+	  p.setBackground(Color.WHITE);
+
+	  for(String str: s){
+		  if(!str.equals(""))
+		  b=true; break;	  
+	  }
+	  	  
+	  if(b){
+		  p.add(new JLabel("Вещества обладающие эффектом суммации:"));
+		  i=1;
+	  }
+	  	  for(String str: s){
+	  if(str.equals("")){
+		  
+	  } else{
+		  i++;
+		  JLabel lb=new JLabel(str,SwingConstants.CENTER);
+		  lb.setBorder(border);
+		  p.setLayout(new GridLayout(i,1));
+		  p.add(lb);
+	  }
+	  }
+	  
+	 
+  }
+  
+  public void createTableX(JPanel p){
+	  p.setBackground(Color.WHITE);
+	  p.setLayout(new GridLayout(0,2));
+	  JLabel lh=new JLabel("Горячие выбросы [м]"); lh.setBorder(border);
+	  JLabel lc=new JLabel("Холодные выбросы [м]"); lc.setBorder(border);
+	  p.add(lh); p.add(lc);
+	  JLabel xmh=new JLabel("Xм = " + c.getXmhot()); xmh.setBorder(border); 
+	  JLabel xmc=new JLabel("Xм = " + c.getXmcold()); xmc.setBorder(border); 
+	  p.add(xmh); p.add(xmc);
+	  JLabel xmih=new JLabel("Xми = " + c.getXmihot()); xmih.setBorder(border); 
+	  JLabel xmic=new JLabel("Xми = " + c.getXmicold()); xmic.setBorder(border);
+	  p.add(xmih); p.add(xmic);
+	  
+  }
+  
+  public void createTable (JPanel p1){
+	  LinkedList<Element> elements=c.getElements();
+      Iterator iterator = elements.iterator();
+      p1.setBackground(Color.WHITE);
+	  JLabel l;
+      JLabel cm;
+      JLabel cmi;
+      JLabel uz;
+      JLabel mpc;
+      JLabel code;    
+      p1.setLayout(new GridLayout(0,6));
+      //GridData g = new GridData();
+      p1.add(new JLabel("Код"));
       p1.add(new JLabel("Элемент "));
-      p1.add(new JLabel("Концентрация "));
-      p1.add(new JLabel("ПДК "));
+      p1.add(new JLabel("Концентрация [мг/м\u00B3]"));
+      p1.add(new JLabel("Cми [мг/м\u00B3]"));
+      p1.add(new JLabel("ПДК [мг/м\u00B3]"));
       p1.add(new JLabel("Уровень загрязнения "));
       while(iterator.hasNext()){
          Element el=(Element) iterator.next();
+         
          String name="";
-          System.out.println("Element :" + el.getCode()+" Concentration " +el.getMass());
+          //System.out.println("Element :" + el.getCode()+" Concentration " +el.getMass());
           l= new JLabel();
-          Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+          
+          code =new JLabel(el.getCode());
+          code.setBorder(border);
+          p1.add(code);
           l.setBorder(border);
           name=el.getName();
           if(el.isHot()){
@@ -50,17 +166,21 @@ public class Report extends JFrame{
           }
           l.setText(name);
           p1.add(l);
-          t= new JLabel();
-          t.setBorder(border);
-          t.setText(Double.toString(el.getCm()));
-          p1.add(t);
+          cm= new JLabel();
+          cm.setBorder(border);
+          cm.setText(Double.toString(el.getCm()));
+          p1.add(cm);
+          cmi= new JLabel();
+          cmi.setBorder(border);
+          cmi.setText(Double.toString(el.getCmi()));
+          p1.add(cmi);
           mpc = new JLabel();
           mpc.setBorder(border);
           mpc.setText(Double.toString(el.getMPC()));
           p1.add(mpc);
           uz= new JLabel();
           uz.setBorder(border);
-          String uzresult = Double.toString(el.getUz());
+          String uzresult =Double.toString(el.getUz());
           uz.setOpaque(true);
           if (el.getUz()>1){
         	  uzresult=uzresult +" >1";
@@ -70,14 +190,12 @@ public class Report extends JFrame{
         	  uz.setText(uzresult);
         	  uz.setBackground(null);
           }
+                   p1.add(uz);
           
-          p1.add(uz);
+          
           
          
       }
-      
-      
-      getContentPane().add(p1);
       
   }
   

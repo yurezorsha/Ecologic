@@ -3,14 +3,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 
 
@@ -103,46 +101,36 @@ public class ExcelParser {
             
             switch (cellType) {
             case _NONE:
-                System.out.print("");
-                System.out.print("\t");
+                
                 break;
             case BOOLEAN:
             	b=cell.getBooleanCellValue();
-                System.out.print(cell.getBooleanCellValue());
-                System.out.print("\t");
+                
                 break;
             case BLANK:
-                System.out.print("");
-                System.out.print("\t");
-                break;
+                              break;
             case FORMULA:
-                // Formula
-                System.out.print(cell.getCellFormula());
-                System.out.print("\t");
-                 
-                FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
-                // Print out value evaluated by formula
-                System.out.print(evaluator.evaluate(cell).getNumberValue());
+                
                 break;
             case NUMERIC:
             	
-                System.out.print(cell.getNumericCellValue());
+                //System.out.print(cell.getNumericCellValue());
                 n=cell.getNumericCellValue();
-                System.out.print("\t");
+              //  System.out.print("\t");
                 break;
             case STRING:
-                System.out.print(cell.getStringCellValue());
+               // System.out.print(cell.getStringCellValue());
                 s=cell.getStringCellValue();
-                System.out.print("\t");
+               // System.out.print("\t");
                 break;
             case ERROR:
-                System.out.print("!");
-                System.out.print("\t");
+                //System.out.print("!");
+               // System.out.print("\t");
                 break;
             }
 
         }
-        System.out.println("");
+        //System.out.println("");
     }
     c.setElements(elements);
     return c;

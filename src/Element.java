@@ -10,6 +10,7 @@ public class Element {
 	private double F;
 	private static double np=1;
 	private double uz;
+	private double cmi;
 	
 	
 	public Element() {
@@ -45,7 +46,21 @@ public class Element {
 	
 	}
 	
+	public void setCmi(double rhot, double rcold) {
+		if(hot==true){
+			this.cmi=rhot*cm;
+		} else{
+			this.cmi=rcold*cm;
+
+			
+		}
 	
+	}
+	
+
+	public double getCmi() {
+		return cmi;
+	}
 
 	public Element(String code, String name, Double mPC, Double mass,
 			boolean hot) {

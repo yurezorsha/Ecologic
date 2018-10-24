@@ -1,38 +1,49 @@
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 
 public class Elements extends JFrame {
+	 private static String LABEL_H="Высота источника выброса H [м]: ";
+	 private static String LABEL_D="Диаметр источника выброса D: [м]: ";
+	 private static String LABEL_V1="Объемный расход выбрасываемой смеси V1 [м\u00B3/с]: ";
+	 private static String LABEL_TG="Температура газовоздушной смеси Tг [\u00B0С]: ";
+	 private static String LABEL_N3="n3 [%]: ";
+	 private static String LABEL_TV="Температура воздуха Тв [\u00B0С]: ";
+	 private static String LABEL_UM="Максимальная скорость ветра Uм [м/с]: ";
+	 private static String LABEL_U="Среднегодовая скорость ветра U [м/с]: ";
+
+	private static  String H="50";
+    private static  String D="40";
+    private static  String V1="400";
+    private static  String TG="120";
+    private static  String N3="0.80";
+    private static  String TV="24";
+    private static  String UM="24";
+    private static  String U="2";
+    
 	private Company c;
     private CatalogOfElements catalog = CatalogOfElements.getInstance();
-    JPanel p1;
-    JPanel p2;
-	Elements(Company c){
+    private JPanel p1;
+    private JPanel p2;
+    
+	public Elements(Company c){
 		
 		this.c=c;
 		setTitle("Перечень элементов "+c.getName()+ " ");
@@ -59,7 +70,7 @@ public class Elements extends JFrame {
 	            l= new JLabel();
 	            Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
 	            l.setBorder(border);
-	            name=el.getName();
+	            name=el.getName() +" [г/с]";
 	            if(el.isHot()){
 	            	name=name + " *";
 	            }
@@ -84,54 +95,29 @@ public class Elements extends JFrame {
 	       
 	 }
 	 
-	 private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elements){
-		 
-		 LinkedList<Double> mas=new LinkedList<Double>(); 
-		 Component[] c=p.getComponents();
-		 int size=c.length;
-		 for(int i = 0; i<size;i++){
-			 if(c[i] instanceof JTextField){
-				 JTextField f=(JTextField) c[i];
-				 mas.add( Double.parseDouble(f.getText()));	 
-			 }
-			  
-			 
-		 }
-		 Iterator iterator = elements.iterator();
-		 int i=0;
-		 while(iterator.hasNext() ){
-			 Element el=(Element) iterator.next();
-			 el.setMass(mas.get(i));			 
-			 elements.set(i, el);
-			 i++;
-
-		 }
-		 
-		 return elements;
-		 
-		 
-	 }
-	 
+	 	 
 	 
 	 private JPanel panel2(){
 		 JPanel p =new JPanel();
-		 p.setBounds(415, 10, 600, 200);
+		 p.setBounds(415, 10, 620, 250);
 		 p.setLayout(new GridLayout(0,2));
 		// p.setSize(new Dimension(100, 200));
-		 JLabel lh =new JLabel("Высота источника выброса H: ");
-		 JTextField h =new JTextField();
-		 p.add(lh); p.add(h);
-		 JLabel ld =new JLabel("Диаметр источника выброса D: ");
-		 JTextField d =new JTextField();
+		
+		 JLabel lh =new JLabel(LABEL_H);
+		 JTextField h =new JTextField(); h.setText(H);
+		 p.add(lh); p.add(h); 
+		 JLabel ld =new JLabel(LABEL_D);
+		 JTextField d =new JTextField(); d.setText(D);
 		 p.add(ld); p.add(d);
-		 JLabel lv1 =new JLabel("Объемный расход выбрасываемой смеси V1: ");
-		 JTextField v1 =new JTextField();
+		 JLabel lv1 =new JLabel(LABEL_V1);
+		 JTextField v1 =new JTextField(); v1.setText(V1);
+		 
 		 p.add(lv1); p.add(v1);
-		 JLabel ltg =new JLabel("Температура газовоздушной смеси Tг: ");
-		 JTextField tg =new JTextField();
+		 JLabel ltg =new JLabel(LABEL_TG);
+		 JTextField tg =new JTextField(); tg.setText(TG);
 		 p.add(ltg); p.add(tg);
-		 JLabel ln3 =new JLabel("n3: ");
-		 JTextField n3 =new JTextField();
+		 JLabel ln3 =new JLabel(LABEL_N3);
+		 JTextField n3 =new JTextField(); n3.setText(N3);
 		 p.add(ln3); p.add(n3);
 		 JLabel larea =new JLabel("Область : ");
 		 String[] areas = { "Брестская", "Витебская", "Гродненская", "Гомельская", "Минская", "Могилевская" };
@@ -140,16 +126,16 @@ public class Elements extends JFrame {
 		 JComboBox areasList = new JComboBox(areas);
 		 areasList.setSelectedIndex(0);
 		 p.add(areasList);
-		 JLabel lTv =new JLabel("Температура воздуха Тв: ");
-		 JTextField tv =new JTextField();
+		 JLabel lTv =new JLabel(LABEL_TV);
+		 JTextField tv =new JTextField(); tv.setText(TV);
 		 tv.setEditable(false);
 		 p.add(lTv); p.add(tv);
-		 JLabel lUm =new JLabel("Максимальная скорость ветра Uм: ");
-		 JTextField um =new JTextField();
+		 JLabel lUm =new JLabel(LABEL_UM);
+		 JTextField um =new JTextField(); um.setText(UM);
 		 um.setEditable(false);
 		 p.add(lUm); p.add(um);
-		 JLabel lU =new JLabel("Среднегодовая скорость ветра U: ");
-		 JTextField u =new JTextField();
+		 JLabel lU =new JLabel(LABEL_U);
+		 JTextField u =new JTextField(); u.setText(U);
 		 u.setEditable(false);
 		 p.add(lU); p.add(u);
 		 
@@ -162,38 +148,38 @@ public class Elements extends JFrame {
 				  switch (area) {
 				case 0:
 					tv.setText("24");
-					um.setText("2.5");
-					u.setText("22");
+					um.setText("22");
+					u.setText("2.5");
 					
 					break;
                 case 1:
                 	tv.setText("23");
-					um.setText("2");
-					u.setText("23");
+					um.setText("23");
+					u.setText("2");
 					
 					break;
                 case 2:
                 	tv.setText("24");
-					um.setText("2.4");
-					u.setText("24");
+					um.setText("24");
+					u.setText("2.4");
 					
 					break;
                 case 3:
                 	tv.setText("25");
-					um.setText("1.9");
-					u.setText("17");
+					um.setText("17");
+					u.setText("1.9");
 					
 					break;
                 case 4:
                 	tv.setText("23");
-					um.setText("2.3");
-					u.setText("24");
+					um.setText("24");
+					u.setText("2.9");
 					
 					break;
                 case 5:
                 	tv.setText("24");
-					um.setText("2.6");
-					u.setText("24");
+					um.setText("24");
+					u.setText("2.6");
 					
 					break;
 
@@ -213,15 +199,16 @@ public class Elements extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Click");
+				//System.out.println("Click");
 				c.setElements(getListofElements(p1, c.getElements()));
 				getParameters(p);
 				calculateConcentration();
-        
+               //System.out.println("uz= "+c.getElementByCode("0301").getUz());
 
 				Report fr  = new Report(c); 
 		        SwingUtilities.invokeLater(new Runnable() {
-		           public void run() {
+		           @Override
+				public void run() {
 		              fr.setVisible(true);
 		           }
 		        });	
@@ -235,6 +222,34 @@ public class Elements extends JFrame {
          return p;
 		 	 
 	 }
+	 
+private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elements){
+		 
+		 LinkedList<Double> mas=new LinkedList<Double>(); 
+		 Component[] c=p.getComponents();
+		 int size=c.length;
+		 for(int i = 0; i<size;i++){
+			 if(c[i] instanceof JTextField){
+				 JTextField f=(JTextField) c[i];
+				 mas.add( Double.parseDouble(f.getText()));	 
+			 }
+	 
+		 }
+		 Iterator iterator = elements.iterator();
+		 int i=0;
+		 while(iterator.hasNext() ){
+			 Element el=(Element) iterator.next();
+			 el.setMass(mas.get(i));			 
+			 elements.set(i, el);
+			 i++;
+
+		 }
+		 
+		 return elements;
+		 
+		 
+	 }
+
 	 
 	 private void getParameters(JPanel p){
 			 LinkedList<Double> mas=new LinkedList<Double>(); 
@@ -258,7 +273,7 @@ public class Elements extends JFrame {
 	 }
 	 
 	 private void calculateConcentration(){
-		 c.setW0();
+		    c.setW0();
 			c.setDelt();
 			c.setF();
 			c.setVm();
@@ -266,11 +281,27 @@ public class Elements extends JFrame {
 			c.setFe();
 			c.setM();
 			c.setkF();
+			c.setXmhot();
+			c.setXmcold();
+			c.setUdhot();
+			c.setUdcold();
+			c.setRhot();
+			c.setRcold();
+			c.setXmihot();
+			c.setXmicold();
 			System.out.println("W0: " + c.getW0()); 
 			System.out.println("delT: " +c.getDelt());
 			System.out.println(" Vm: " +c.getVm());
 			System.out.println(" fe: " + c.getFe());
 			System.out.println(" m: " + c.getM());
+			System.out.println(" Xm горяч: " + c.getXmhot());
+			System.out.println(" Xm холодн: " + c.getXmcold());
+			System.out.println(" Um горяч: " + c.getUdhot());
+			System.out.println(" Um холодн: " + c.getUdcold());
+			System.out.println(" r горяч: " + c.getRhot());
+			System.out.println(" r холодн: " + c.getRcold());
+			System.out.println(" Xми горяч: " + c.getXmihot());
+			System.out.println(" Хми холодн: " + c.getXmicold());
 			
 			LinkedList<Element> elements=c.getElements();
          Iterator iterator = elements.iterator();
@@ -280,9 +311,15 @@ public class Elements extends JFrame {
 			 double n = c.getN(el.isHot());
 			 el.setCm(n, c.getM(), c.getkF(), c.getH(), c.getDelt(), c.getV1(), c.getD());
 			 el.setUz();
+			 el.setCmi(c.getRhot(), c.getRcold());
+			 
+			 
 			 elements.set(i, el);
+			 
 		     i++;
          }
+         c.setElements(elements);
+         
          
 		 
 	 }

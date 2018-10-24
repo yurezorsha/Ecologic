@@ -1,6 +1,5 @@
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Map;
 
 
 public class Company {
@@ -26,8 +25,14 @@ public class Company {
    private double m;
    private double n;
    private double kF; 		
-	
-
+   private double xmhot;
+   private double xmcold;
+   private double udhot;
+   private double udcold;
+   private double rhot;
+   private double rcold;
+   private double xmihot;
+   private double xmicold;
 
 
 	public Company(String name, int number) {
@@ -255,13 +260,248 @@ public class Company {
 	public Element getElementByCode(String Code){
 		Element tmpel=null;
 		for (Element e:elements) {
-			if(e.getName().equals(Code)){
+			if(e.getCode().equals(Code)){
 				tmpel=e;
 				break;
 			}
 		}
 		return tmpel;
 		
+	}
+	
+	public ArrayList<String> checkSum1(){
+		ArrayList<String> names=new ArrayList<String>();
+		Element e1 = getElementByCode("0301");
+		Element e2 = getElementByCode("0330");
+		if(e1!=null && e2!=null){
+
+			names.add(e1.getCode());
+			names.add(e2.getCode());
+			
+		}
+		return names;
+	}
+	
+	public ArrayList<String> checkSum2(){
+		ArrayList<String> names=new ArrayList<String>();
+		Element e1 = getElementByCode("0330");
+		Element e2 = getElementByCode("0184");
+		if(e1!=null && e2!=null){
+			names.add(e1.getCode());
+			names.add(e2.getCode());
+			
+		}
+		return names;
+	}
+	
+	public ArrayList<String> checkSum3(){
+		ArrayList<String> names=new ArrayList<String>();
+		Element e1 = getElementByCode("0342");
+		Element e2 = getElementByCode("0330");
+		if(e1!=null && e2!=null){
+			names.add(e1.getCode());
+			names.add(e2.getCode());
+			
+		}
+		return names;
+	}
+	
+	public ArrayList<String> checkSum4(){
+		ArrayList<String> names=new ArrayList<String>();
+		Element e1 = getElementByCode("0337");
+		Element e2 = getElementByCode("2908");
+		if(e1!=null && e2!=null){
+			names.add(e1.getCode());
+			names.add(e2.getCode());
+			
+		}
+		return names;
+	}
+	
+	public ArrayList<String> checkSum5(){
+		ArrayList<String> names=new ArrayList<String>();
+		Element e1 = getElementByCode("0301");
+		Element e2 = getElementByCode("0330");
+		Element e3 = getElementByCode("0303");
+		Element e4 = getElementByCode("0304");
+		if(e1!=null && e2!=null && e3!=null && e4!=null){
+			names.add(e1.getCode());
+			names.add(e2.getCode());
+			names.add(e3.getCode());
+			names.add(e4.getCode());
+
+			
+		}
+		return names;
+	}
+	
+	public double calcd(boolean h){
+		double d=0;
+		if(h){
+			if(vm<=0.5){
+				d =2.48*(1+0.28*Math.pow(fe, 1/3));
+			}else if( vm >0.5 && vm <= 2){
+				    d = 4.95*vm *(1+0.28*Math.pow(fe, 1/3));
+			    } else 
+			    	d = 7*Math.sqrt(vm)* (1+0.28*Math.pow(fe, 1/3));
+			      
+		} else{
+			if(vm<=0.5){
+				d =5.7;
+			}else if( vm >0.5 && vm <= 2){
+				    d = 11.4*vm;
+			    } else 
+			    	d = 16*Math.sqrt(vm);
+
+			
+		}
+		
+		return d;
+		
+	}
+	
+	
+
+
+	public double getXmhot() {
+		return xmhot;
+	}
+
+	public void setXmhot() {
+		this.xmhot=((5-kF)*calcd(true)*h)/4;
+	}
+
+	public double getXmcold() {
+		return xmcold;
+	}
+
+	public void setXmcold() {
+		this.xmcold =((5-kF)*calcd(false)*h)/4;
+	}
+	
+	public double calcUd(boolean h){
+		double um=0;
+		if(h){
+			if(vm<=0.5){
+				um = 0.5;
+			}else if( vm >0.5 && vm <= 2){
+				    um = vm;
+			    } else 
+			    	   um = vm*(1+0.12*Math.sqrt(f));
+			      
+		} else{
+			if(vm1<=0.5){
+				um = 0.5;
+			}else if( vm1 >0.5 && vm1 <= 2){
+				    um = vm1;
+			    } else 
+			    	   um = 2.2* Math.sqrt(vm1);
+
+			
+		}
+		
+		return um;
+		
+	}
+	
+
+	public double getUdhot() {
+		return udhot;
+	}
+
+	public void setUdhot() {
+		this.udhot = calcUd(true);
+	}
+
+	public double getUdcold() {
+		return udcold;
+	}
+
+	public void setUdcold() {
+		this.udcold = calcUd(false);
+	}
+	
+	
+	public double calcr(boolean h){
+		double r = 0;
+		if(h){
+			if( u/udhot<=1)
+				r = 0.67*(u/udhot)+1.67*Math.pow(u/udhot, 2)- 1.34*Math.pow(u/udhot, 3);
+			else
+				r = (3*u/udhot)/(2*Math.pow(u/udhot, 2)-(u/udhot)+2);
+		    }else{
+		    	if( u/udcold<=1)
+					r = 0.67*(u/udcold)+1.67*Math.pow(u/udcold, 2)- 1.34*Math.pow(u/udcold, 3);
+				else
+					r = (3*u/udcold)/(2*Math.pow(u/udcold, 2)-(u/udcold)+2);
+			 
+			
+		}
+		
+		return r;
+		
+	}
+	
+	
+
+	public double getRhot() {
+		return rhot;
+	}
+
+	public void setRhot() {
+		this.rhot = calcr(true);
+	}
+
+	public double getRcold() {
+		return rcold;
+	}
+
+	public void setRcold() {
+		this.rcold = calcr(false);
+	}
+	
+	
+	public double calcp(boolean h){
+		double p=0;
+		if(h){
+			if (u/udhot<=0.25)
+				p = 3;
+			  else if ( (u/udhot>0.25) && (u/udhot)<=1)
+				   p = 8.43*Math.pow(1-u/udhot,5) +1;
+			    else
+			    	 p = 0.32*(u/udhot) + 0.68;
+			
+		} else{
+			if (u/udcold<=0.25)
+				p = 3;
+			  else if ( (u/udcold>0.25) && (u/udcold)<=1)
+				   p = 8.43*Math.pow(1-u/udcold,5) +1;
+			    else
+			    	 p = 0.32*(u/udcold) + 0.68;
+		}
+		
+		return p;
+		
+	}
+	
+	
+	
+	
+
+	public double getXmihot() {
+		return xmihot;
+	}
+
+	public void setXmihot() {
+		this.xmihot = xmhot*calcp(true);
+	}
+
+	public double getXmicold() {
+		return xmicold;
+	}
+
+	public void setXmicold() {
+		this.xmicold = xmcold *calcp(false);
 	}
 
 	@Override
