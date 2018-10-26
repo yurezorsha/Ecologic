@@ -269,71 +269,6 @@ public class Company {
 		
 	}
 	
-	public ArrayList<String> checkSum1(){
-		ArrayList<String> names=new ArrayList<String>();
-		Element e1 = getElementByCode("0301");
-		Element e2 = getElementByCode("0330");
-		if(e1!=null && e2!=null){
-
-			names.add(e1.getCode());
-			names.add(e2.getCode());
-			
-		}
-		return names;
-	}
-	
-	public ArrayList<String> checkSum2(){
-		ArrayList<String> names=new ArrayList<String>();
-		Element e1 = getElementByCode("0330");
-		Element e2 = getElementByCode("0184");
-		if(e1!=null && e2!=null){
-			names.add(e1.getCode());
-			names.add(e2.getCode());
-			
-		}
-		return names;
-	}
-	
-	public ArrayList<String> checkSum3(){
-		ArrayList<String> names=new ArrayList<String>();
-		Element e1 = getElementByCode("0342");
-		Element e2 = getElementByCode("0330");
-		if(e1!=null && e2!=null){
-			names.add(e1.getCode());
-			names.add(e2.getCode());
-			
-		}
-		return names;
-	}
-	
-	public ArrayList<String> checkSum4(){
-		ArrayList<String> names=new ArrayList<String>();
-		Element e1 = getElementByCode("0337");
-		Element e2 = getElementByCode("2908");
-		if(e1!=null && e2!=null){
-			names.add(e1.getCode());
-			names.add(e2.getCode());
-			
-		}
-		return names;
-	}
-	
-	public ArrayList<String> checkSum5(){
-		ArrayList<String> names=new ArrayList<String>();
-		Element e1 = getElementByCode("0301");
-		Element e2 = getElementByCode("0330");
-		Element e3 = getElementByCode("0303");
-		Element e4 = getElementByCode("0304");
-		if(e1!=null && e2!=null && e3!=null && e4!=null){
-			names.add(e1.getCode());
-			names.add(e2.getCode());
-			names.add(e3.getCode());
-			names.add(e4.getCode());
-
-			
-		}
-		return names;
-	}
 	
 	public double calcd(boolean h){
 		double d=0;
@@ -509,5 +444,20 @@ public class Company {
 				return name;
 	}
     
+	public ArrayList<String> getListCodesOfelements(){
+		ArrayList<String> list =new ArrayList<String>();
+		for(Element element: getElements()){
+			list.add(element.getCode());
+		}
+		
+		return list;
+	}
 	
+	public ArrayList<String> checkElem(ArrayList<String> sumelem){
+  		      if(getListCodesOfelements().containsAll(sumelem))
+		    	  return sumelem;
+		      else
+		    	  return null;
+		    	  
+	}
 }

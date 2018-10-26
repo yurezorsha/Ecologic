@@ -74,8 +74,7 @@ public class ExcelParser {
     LinkedList<Element> elements=new LinkedList();
     //System.out.println("Names: "+ workbook.getSheetName(0));
     while (rowIterator.hasNext()) {
-    	
-    	
+     	
         Row row = rowIterator.next();
         // Get iterator to all cells of current row
         Iterator<Cell> cellIterator = row.cellIterator();

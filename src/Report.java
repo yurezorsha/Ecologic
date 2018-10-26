@@ -19,7 +19,7 @@ import javax.swing.border.Border;
 public class Report extends JFrame{
   private Company c;
   private Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
-
+  private ArrayList<SumElem> sumelem=CatalogOfElements.getInstance().sumelem;
   public Report(Company c) throws HeadlessException {
 	super();
 	this.c = c;
@@ -27,7 +27,7 @@ public class Report extends JFrame{
   }
   
   private void initFrame(){
-	     
+	   //System.out.println(sumelem.get(0).toString());
       setLayout(new FlowLayout());
       setSize(1030, 800);
       
@@ -38,8 +38,8 @@ public class Report extends JFrame{
       JPanel p2 =new JPanel();
       createTable(p1);
       p2.setBounds(10, 620, 350, 100);
-      String[] s= {getUz(c.checkSum1()),getUz(c.checkSum2()),getUz(c.checkSum3()), getUz(c.checkSum4()), getUz(c.checkSum5())};
-      createTableUz(p2, s); 
+      //String[] s= {getUz(c.checkSum1()),getUz(c.checkSum2()),getUz(c.checkSum3()), getUz(c.checkSum4()), getUz(c.checkSum5())};
+      createTableUz(p2, getStringsUz(sumelem)); 
       JPanel p3 = new JPanel();
       p3.setBounds(380,620,350,100);
       createTableX(p3);
@@ -64,9 +64,21 @@ public class Report extends JFrame{
   }
   
   
+  public ArrayList<String> getStringsUz(ArrayList<SumElem> sumel){
+	 ArrayList<String> lst=new ArrayList<String>();
+	 for(SumElem el: sumel){
+		if(c.checkElem(el.getSumelem())!=null){
+			lst.add(getUz(el.getSumelem()));
+		}
+	 }
+	 return lst;
+	  
+  }
+  
   public String getUz(ArrayList<String> names){
 	 String str="";
  	 String str2 ="УЗсумм(";
+ 	 String str0="";
  	 double sumuz = 0;
 	  if(!names.isEmpty()){
 	    	 	    	 
@@ -78,7 +90,9 @@ public class Report extends JFrame{
 				   sumuz+= e.getUz(); 
 				   str2+= e.getCode()+" ";
 			 }
-	         str+=str2 +") = "+ sumuz +"\n";
+	         if(sumuz>1)
+	        	 str0=" >1";
+	         str+=str2 +") = "+ sumuz +str0+"\n";
 	         
 	         }
 	  else {str="";}
@@ -87,18 +101,18 @@ public class Report extends JFrame{
   }
   
   
-  public void createTableUz(JPanel p,String[] s){
+  public void createTableUz(JPanel p,ArrayList<String> s){
 	  boolean b= false;
 	  int i=0;
-	  p.setBackground(Color.WHITE);
-
-	  for(String str: s){
+	  
+      	  for(String str: s){
 		  if(!str.equals(""))
 		  b=true; break;	  
 	  }
 	  	  
 	  if(b){
 		  p.add(new JLabel("Вещества обладающие эффектом суммации:"));
+		  p.setBackground(Color.WHITE);
 		  i=1;
 	  }
 	  	  for(String str: s){

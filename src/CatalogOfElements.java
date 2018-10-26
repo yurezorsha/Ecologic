@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -13,16 +14,19 @@ import org.apache.poi.ss.usermodel.Row;
 
 public class CatalogOfElements {
 	private LinkedList<Element> elements;
+	private static String PATH ="parametry_vybrosov_ZV.xls";
+	public static ArrayList<SumElem> sumelem;
 	
 	private static CatalogOfElements single_instance = null; 
-	String code=null;
-    Double MPC=null;
-	String name=null;
+	private String code=null;
+    private  Double MPC=null;
+	private String name=null;
      
 	private CatalogOfElements() {
 		
 		try {
-			loadFromExcel("parametry_vybrosov_ZV.xls");
+			loadFromExcel(PATH);
+			loadsum(PATH);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -54,7 +58,7 @@ public class CatalogOfElements {
 	private void loadFromExcel(String path) throws IOException{
 		    FileInputStream inputStream=new FileInputStream(new File(path));
 		    HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
-		    HSSFSheet sheet = workbook.getSheetAt(workbook.getNumberOfSheets()-1);
+		    HSSFSheet sheet = workbook.getSheetAt(workbook.getNumberOfSheets()-2);
 		    Iterator<Row> rowIterator = sheet.iterator();	    
 		    this.elements=new LinkedList();
 		    
@@ -150,6 +154,47 @@ public class CatalogOfElements {
 		    return tmpel;
 		}
 	}
+	
+	
+	
+	private void loadsum(String path) throws IOException{
+		sumelem=new ArrayList<SumElem>();
+	    FileInputStream inputStream=new FileInputStream(new File(path));
+	    HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
+	    HSSFSheet sheet = workbook.getSheetAt(workbook.getNumberOfSheets()-1);
+	    Iterator<Row> rowIterator = sheet.iterator();	    
+	    	    
+	    while (rowIterator.hasNext()) {  	
+	        Row row = rowIterator.next();
+	        SumElem elem=new SumElem();
+	        ArrayList<String> lst=new ArrayList<String>();
+	        Iterator<Cell> cellIterator = row.cellIterator();
+	        
+	        while (cellIterator.hasNext()) {
+	            Cell cell = cellIterator.next();		
+	            CellType cellType =cell.getCellType() ;
+	            
+	            
+	            switch (cellType) {
+	           
+	            case STRING:
+	                lst.add(cell.getStringCellValue());	                
+	                break;
+	            case ERROR:
+	               // System.out.print("!");
+	                //System.out.print("\t");
+	                break;
+	            }
+
+	        }
+	        elem.setSumelem(lst);
+	        sumelem.add(elem);
+	        //System.out.println("");
+	    }
+	    
+	    
+
+}
 	
 	
 
