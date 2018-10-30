@@ -289,6 +289,8 @@ private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elem
 			c.setRcold();
 			c.setXmihot();
 			c.setXmicold();
+			
+			
 			System.out.println("W0: " + c.getW0()); 
 			System.out.println("delT: " +c.getDelt());
 			System.out.println(" Vm: " +c.getVm());
@@ -319,6 +321,29 @@ private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elem
 		     i++;
          }
          c.setElements(elements);
+         
+         XY xy=new XY(30,50);
+			c.setXy(xy);
+			LinkedList<XY> lst = new LinkedList<>();
+			lst.add(new XY(40,100));
+			lst.add(new XY(100,100));
+			lst.add(new XY(200,100));
+			lst.add(new XY(10,100));
+			lst.add(new XY(300,100));
+			c.setMap(lst);
+            
+		/*HashMap<XY,LinkedList<Element>>  map = c.getMap();        
+		Iterator<Map.Entry<XY,LinkedList<Element>>> iter =map.entrySet().iterator();
+        while(iter.hasNext()){
+     	   Entry<XY,LinkedList<Element>> entry = iter.next();
+
+     	           	System.out.println(entry.getKey());
+     	           	for(Element el:entry.getValue())
+     	            System.out.println(el);
+     	 
+     	   
+        }*/
+
          
          
 		 

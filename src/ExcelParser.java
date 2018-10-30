@@ -91,6 +91,8 @@ public class ExcelParser {
                 elem.setHot(b);
             	elem.setName(catalog.getElementByCode(s).getName());
             	elem.setMPC(catalog.getElementByCode(elem.getCode()).getMPC());
+            	elem.setCcc(catalog.getElementByCode(elem.getCode()).getCcc());
+            	System.out.println(elem.getCcc());
             	elements.add(elem);
             	n=null;
             	s=null;

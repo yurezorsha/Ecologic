@@ -11,6 +11,9 @@ public class Element {
 	private static double np=1;
 	private double uz;
 	private double cmi;
+	private double c;
+	private double cp;
+	private double ccc;
 	
 	
 	public Element() {
@@ -22,7 +25,31 @@ public class Element {
 		
 	}
     
+    public Element(String code, double c, double cp, double ccc) {
+    	this.code=code;
+    	this.c=c;
+    	this.cp=cp;
+    	this.ccc=ccc;
+		
+	}
     
+    
+	public double getC() {
+		return c;
+	}
+
+	public void setC(double c) {
+		this.c = c;
+	}
+
+	public double getCp() {
+		return cp;
+	}
+
+	public void setCp(double cp) {
+		this.cp = cp;
+	}
+
 	public double getCm() {
 		return cm;
 	}
@@ -103,10 +130,20 @@ public class Element {
 		this.hot = hot;
 	}
 	
+	
+	
+	public double getCcc() {
+		return ccc;
+	}
+
+	public void setCcc(double ccc) {
+		this.ccc = ccc;
+	}
+
 	@Override
 	public String toString() {
 		
-		return code + " : " + name;
+		return code + " : " + name +"\n" +" Cm " +cm +" C " +c +" Cp " +cp;
 	}
 	
 

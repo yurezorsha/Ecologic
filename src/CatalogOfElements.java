@@ -21,7 +21,8 @@ public class CatalogOfElements {
 	private String code=null;
     private  Double MPC=null;
 	private String name=null;
-     
+	private Double Ccc=null;
+	     
 	private CatalogOfElements() {
 		
 		try {
@@ -74,46 +75,28 @@ public class CatalogOfElements {
 		            
 		            switch (cellType) {
 		            
-		            case _NONE:
-		                
-		                break;
-		            case BOOLEAN:
-		                		                break;
-		            case BLANK:
-		                
-		                break;
-		            case FORMULA:
-		                // Formula
-		               // System.out.print(cell.getCellFormula());
-		               // System.out.print("\t");
-		                 
-		               // FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
-		                // Print out value evaluated by formula
-		                //System.out.print(evaluator.evaluate(cell).getNumberValue());
-		                break;
-		            case NUMERIC:
+		          case NUMERIC:
 		            	
-		                //System.out.print(cell.getNumericCellValue());
-		                MPC=cell.getNumericCellValue();
-		               // System.out.print("\t");
+		                if(MPC==null )
+		                   MPC = cell.getNumericCellValue();
+		                else 
+		                	Ccc = cell.getNumericCellValue();
+		            	
+		            
 		                break;
 		            case STRING:
-		                //System.out.print(cell.getStringCellValue());
+		                
 		                if(code==null){
-		                    code=cell.getStringCellValue();
+		                    code = cell.getStringCellValue();
 		                }else{
-		                	name=cell.getStringCellValue();
+		                	name = cell.getStringCellValue();
 		                }
-		                //System.out.print("\t");
+	
 		                break;
-		            case ERROR:
-		               // System.out.print("!");
-		                //System.out.print("\t");
-		                break;
+		            
 		            }
 
 		        }
-		        //System.out.println("");
 		    }
 		    
 		    
@@ -121,15 +104,17 @@ public class CatalogOfElements {
 }
 	
 	public void addElementToList(){
-		if(code!=null && name!=null && MPC!=null){
+		if(code!=null && name!=null && MPC!=null && Ccc!=null){
         	Element elem =new Element();
         	elem.setCode(code);
         	elem.setName(name);
         	elem.setMPC(MPC/1000);
+        	elem.setCcc(Ccc/1000);
           	this.elements.add(elem);
         	code=null;
         	MPC=null;
         	name=null;
+        	Ccc=null;
         }
 	}
 	
@@ -180,11 +165,7 @@ public class CatalogOfElements {
 	            case STRING:
 	                lst.add(cell.getStringCellValue());	                
 	                break;
-	            case ERROR:
-	               // System.out.print("!");
-	                //System.out.print("\t");
-	                break;
-	            }
+	 	            }
 
 	        }
 	        elem.setSumelem(lst);

@@ -1,11 +1,14 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 
 public class Company {
    private String name;
+   private XY xy;
    private int number;
    private LinkedList<Element> elements;
+   private HashMap<XY,LinkedList<Element>> map;   
    private double h;
    private double d;
    private double v1;
@@ -41,6 +44,18 @@ public class Company {
 		this.number = number;
 	}
 	
+
+	public XY getXy() {
+		return xy;
+	}
+
+
+	public void setXy(XY xy) {
+		this.xy = xy;
+	}
+
+
+
 	public double getW0() {		
 		return w0;
 	}
@@ -417,10 +432,7 @@ public class Company {
 		
 		return p;
 		
-	}
-	
-	
-	
+	}	
 	
 
 	public double getXmihot() {
@@ -460,4 +472,100 @@ public class Company {
 		    	  return null;
 		    	  
 	}
+	
+	
+	public void setMap(LinkedList<XY> xy){
+		map =new HashMap<>();
+
+		for(XY t_xy: xy){
+			
+			XY temp_xy = getXY(t_xy);
+			System.out.println(temp_xy);
+			LinkedList<Element> temm_el= new LinkedList<>();
+		for(Element el:elements){
+			
+			double devX = xDevByXm(temp_xy, el.isHot());
+			double s1 = s1(devX);
+			double ty = ty(temp_xy);
+			double s2 = s2(ty);
+			double c= s1*el.getCm();
+			double cp= s2*c;
+			temm_el.add(new Element(el.getCode(),c,cp,el.getCcc()));
+			
+        
+			
+		}
+		//System.out.println(t_xy);
+		map.put(t_xy, temm_el);
+		}
+		
+		
+	}
+	
+	
+	
+	
+	public HashMap<XY, LinkedList<Element>> getMap() {
+		return map;
+	}
+
+
+	public XY getXY(XY xy){
+		XY new_xy=new XY(Math.abs(xy.getX()-getXy().getX()), Math.abs(xy.getY()-getXy().getY()));
+		
+		return new_xy;		
+	}
+	
+	public double xDevByXm(XY xy, boolean hot){
+		if(hot){
+			return  xy.getX()/getXmhot();	
+		} 
+		else{
+			return xy.getX()/getXmcold();
+		}
+		 		
+	}
+	
+	public double s1(double devX){
+		double s1=0;
+		if(h>=2 && h<10 && devX<1){
+			s1 = 0.125*(10-h)+0.125*(h-2)*(3*Math.pow(devX, 4)-8*Math.pow(devX, 3)+ 6*Math.pow(devX, 2));
+		} else {
+		
+		if(devX<=1){
+			s1 = 3*Math.pow(devX, 4)-8*Math.pow(devX, 3)+ 6*Math.pow(devX, 2);
+		} else if(devX>1 &&devX<=8){
+			s1 = (1.13)/(0.13*Math.pow(devX,2)+1);
+			
+			
+		} else if(devX>8 && kF<=1.5){
+			s1 = devX/(3.58*Math.pow(devX,2)-35.2*devX+120);
+			
+		} else if (devX>8 && kF>1.5){
+			s1 =1/(0.1*Math.pow(devX,2)+2.47*devX-17.8);
+		}
+		}
+		return s1;
+		
+	}
+	
+	public double ty(XY xy){
+		double ty=0;
+		if(u<=5){
+			ty = u*Math.pow(xy.getY(),2)/Math.pow(xy.getX(), 2);
+		} else{
+			ty = 5*Math.pow(xy.getY(),2)/Math.pow(xy.getX(), 2);
+			
+		}
+		
+		return ty;
+	}
+	
+	public double s2(double ty){
+		return 1/(1+5*ty+12.8*Math.pow(ty,2)+17*Math.pow(ty, 3) +45.1*Math.pow(ty,4));
+	}
+	
+		
 }
+
+

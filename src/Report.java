@@ -3,15 +3,23 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
@@ -20,16 +28,29 @@ public class Report extends JFrame{
   private Company c;
   private Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
   private ArrayList<SumElem> sumelem=CatalogOfElements.getInstance().sumelem;
+  private HashMap<XY,LinkedList<Element>> map;
+  private LinkedList<XY> lst =new LinkedList();
+  private JTable table;
+  private ModelTable model;
+  
+
+  
   public Report(Company c) throws HeadlessException {
 	super();
 	this.c = c;
+	HashMap<XY,LinkedList<Element>>  map = c.getMap();        
+	Iterator<Map.Entry<XY,LinkedList<Element>>> iter =map.entrySet().iterator();
+    while(iter.hasNext()){
+ 	   Entry<XY,LinkedList<Element>> entry = iter.next();
+ 	   lst.add(entry.getKey());
+    }
 	initFrame();
   }
   
   private void initFrame(){
 	   //System.out.println(sumelem.get(0).toString());
       setLayout(new FlowLayout());
-      setSize(1030, 800);
+      setSize(1050, 900);
       
       
       //setLayout();
@@ -39,20 +60,63 @@ public class Report extends JFrame{
       createTable(p1);
       p2.setBounds(10, 620, 350, 100);
       //String[] s= {getUz(c.checkSum1()),getUz(c.checkSum2()),getUz(c.checkSum3()), getUz(c.checkSum4()), getUz(c.checkSum5())};
-      createTableUz(p2, getStringsUz(sumelem)); 
+      createTableUz(p2, getStringsUz(sumelem));
+      JPanel p4 = new JPanel();
+      p4.setBounds(10 , 750, 700, 400);
+      p4.setLayout(new GridLayout(0,1));
+      
+      p4.setBackground(Color.WHITE);
+      
+         
+      //ModelTable model =new ModelTable(c.getMap().get(lst.get(0)),lst.get(0));
+      JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(
+				lst.toArray()));
+		comboBox.setSelectedIndex(0);
+		
+		comboBox.setBounds(10, 730, 300, 20);
+		model =new ModelTable(c.getMap().get(lst.get(0)),lst.get(0));
+		  table =new JTable();
+	      table.setModel(model);
+	      table.setVisible(true);
+		comboBox.addActionListener(new ActionListener() {///////////////// choose function
+             
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				XY n = (XY) comboBox.getSelectedItem();
+				
+				model =new ModelTable(c.getMap().get(n),n);
+				table.setModel(model);
+			}
+		});
+      
+      
+        
+      p4.add(comboBox);
+      p4.add(table);
+      
+     JScrollPane js = new JScrollPane(table);
+	
+	js.setBounds(10, 750, 400, 400);
+	js.setVisible(true);
+      p4.add(js);
+		
+     
       JPanel p3 = new JPanel();
       p3.setBounds(380,620,350,100);
       createTableX(p3);
       
       
       JPanel p0=new JPanel();
-      p0.setPreferredSize(new Dimension(600,800));
+      p0.setPreferredSize(new Dimension(1000,2000));
       
-      p0.setBounds(0, 0, 980, 700);
+      p0.setBounds(0, 0, 980, 1000);
       p0.setLayout(null); 
       p0.add(p1);
       p0.add(p2);
       p0.add(p3);
+      p0.add(p4);
+      
       JScrollPane scrollBar = new JScrollPane(p0, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
       //scrollBar.setBounds(0, 0, 1000, 700);
       scrollBar.setPreferredSize(new Dimension(1000,700));
@@ -85,7 +149,7 @@ public class Report extends JFrame{
 	         ArrayList<String> lst=names;
 	         for (String code: lst) {
 	        	   Element e = this.c.getElementByCode(code);
-	        	   System.out.println(e.getUz());
+	        	   //System.out.println(e.getUz());
 
 				   sumuz+= e.getUz(); 
 				   str2+= e.getCode()+" ";
@@ -96,7 +160,7 @@ public class Report extends JFrame{
 	         
 	         }
 	  else {str="";}
-	  System.out.println(str);
+	  //System.out.println(str);
 	  return str;
   }
   
@@ -159,9 +223,9 @@ public class Report extends JFrame{
       //GridData g = new GridData();
       p1.add(new JLabel("Код"));
       p1.add(new JLabel("Элемент "));
-      p1.add(new JLabel("Концентрация [мг/м\u00B3]"));
-      p1.add(new JLabel("Cми [мг/м\u00B3]"));
-      p1.add(new JLabel("ПДК [мг/м\u00B3]"));
+      p1.add(new JLabel("Концентрация [г/м\u00B3]"));
+      p1.add(new JLabel("Cми [г/м\u00B3]"));
+      p1.add(new JLabel("ПДК [г/м\u00B3]"));
       p1.add(new JLabel("Уровень загрязнения "));
       while(iterator.hasNext()){
          Element el=(Element) iterator.next();
