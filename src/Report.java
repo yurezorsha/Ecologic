@@ -62,19 +62,19 @@ public class Report extends JFrame{
       //String[] s= {getUz(c.checkSum1()),getUz(c.checkSum2()),getUz(c.checkSum3()), getUz(c.checkSum4()), getUz(c.checkSum5())};
       createTableUz(p2, getStringsUz(sumelem));
       JPanel p4 = new JPanel();
-      p4.setBounds(10 , 750, 700, 400);
+      p4.setBounds(10 , 750, 700, 300);
       p4.setLayout(new GridLayout(0,1));
       
-      p4.setBackground(Color.WHITE);
       
          
       //ModelTable model =new ModelTable(c.getMap().get(lst.get(0)),lst.get(0));
       JComboBox comboBox = new JComboBox();
+      comboBox.setBounds(10 , 720, 200, 30);
 		comboBox.setModel(new DefaultComboBoxModel(
 				lst.toArray()));
 		comboBox.setSelectedIndex(0);
 		
-		comboBox.setBounds(10, 730, 300, 20);
+		
 		model =new ModelTable(c.getMap().get(lst.get(0)),lst.get(0));
 		  table =new JTable();
 	      table.setModel(model);
@@ -89,10 +89,16 @@ public class Report extends JFrame{
 				table.setModel(model);
 			}
 		});
+		
+		JPanel p5 =new JPanel();
+	      p5.setBounds(10 , 720, 200, 30);
+	      p5.setLayout(new FlowLayout());
+	      p5.add(comboBox);
+	      
       
       
         
-      p4.add(comboBox);
+     
       p4.add(table);
       
      JScrollPane js = new JScrollPane(table);
@@ -116,6 +122,7 @@ public class Report extends JFrame{
       p0.add(p2);
       p0.add(p3);
       p0.add(p4);
+      p0.add(p5);
       
       JScrollPane scrollBar = new JScrollPane(p0, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
       //scrollBar.setBounds(0, 0, 1000, 700);
