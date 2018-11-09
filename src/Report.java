@@ -121,7 +121,7 @@ public class Report extends JFrame{
   
   public String getUz(ArrayList<String> names){
 	 String str="";
- 	 String str2 ="УЗсумм(";
+ 	 String str2 ="Узсумм(";
  	 String str0="";
  	 double sumuz = 0;
 	  if(!names.isEmpty()){
@@ -176,13 +176,13 @@ public class Report extends JFrame{
 	  p.setBackground(Color.WHITE);
 	  p.setLayout(new GridLayout(0,2));
 	  JLabel lh=new JLabel("Горячие выбросы [м]"); lh.setBorder(border);
-	  JLabel lc=new JLabel("Холодные выбросы [м]"); lc.setBorder(border);
+	  JLabel lc=new JLabel("Холодные выбросы [v]"); lc.setBorder(border);
 	  p.add(lh); p.add(lc);
 	  JLabel xmh=new JLabel("Xм = " + c.getXmhot()); xmh.setBorder(border); 
-	  JLabel xmc=new JLabel("Xм = " + c.getXmcold()); xmc.setBorder(border); 
+	  JLabel xmc=new JLabel("Хм = " + c.getXmcold()); xmc.setBorder(border); 
 	  p.add(xmh); p.add(xmc);
-	  JLabel xmih=new JLabel("Xми = " + c.getXmihot()); xmih.setBorder(border); 
-	  JLabel xmic=new JLabel("Xми = " + c.getXmicold()); xmic.setBorder(border);
+	  JLabel xmih=new JLabel("Хми = " + c.getXmihot()); xmih.setBorder(border); 
+	  JLabel xmic=new JLabel("Хми = " + c.getXmicold()); xmic.setBorder(border);
 	  p.add(xmih); p.add(xmic);
 	  
   }
@@ -201,7 +201,7 @@ public class Report extends JFrame{
       p1.add(new JLabel("Код"));
       p1.add(new JLabel("Элемент "));
       p1.add(new JLabel("Концентрация [г/м\u00B3]"));
-      p1.add(new JLabel("Cми [г/м\u00B3]"));
+      p1.add(new JLabel("Сми [г/м\u00B3]"));
       p1.add(new JLabel("ПДК [г/м\u00B3]"));
       p1.add(new JLabel("Уровень загрязнения "));
       while(iterator.hasNext()){

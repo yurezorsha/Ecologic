@@ -16,10 +16,10 @@ public class ModelTable extends AbstractTableModel{
 		this.elem=elem;
 		this.xy=xy;
 		    columnNames = new Vector<String>();
-		    columnNames.add("Код элемента" );
-			columnNames.add("C ("+ xy +") [г/м\u00B3]" );
-			columnNames.add("Cp ("+ xy +") [г/м\u00B3]");
-		    columnNames.add("Ccc [г/м\u00B3]");
+		    columnNames.add("РљРѕРґ СЌР»РµРјРµРЅС‚Р°" );
+			columnNames.add("C ("+ xy +") [Рі/СЃ\u00B3]" );
+			columnNames.add("Cp ("+ xy +") [Рі/СЃ\u00B3]");
+		    columnNames.add("Ccc [Рі/СЃ\u00B3]");
 		
 			}
 
