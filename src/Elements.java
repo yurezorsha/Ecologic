@@ -20,14 +20,14 @@ import javax.swing.border.Border;
 
 
 public class Elements extends JFrame {
-	 private static String LABEL_H="Высота источника выброса H [м]: ";
-	 private static String LABEL_D="Диаметр источника выброса D: [м]: ";
-	 private static String LABEL_V1="Объемный расход выбрасываемой смеси V1 [м\u00B3/с]: ";
-	 private static String LABEL_TG="Температура газовоздушной смеси Tг [\u00B0С]: ";
+	 private static String LABEL_H="Р’С‹СЃРѕС‚Р° РёСЃС‚РѕС‡РЅРёРєР° РІС‹Р±СЂРѕСЃР° H [Рј]: ";
+	 private static String LABEL_D="Р”РёР°РјРµС‚СЂ РёСЃС‚РѕС‡РЅРёРєР° РІС‹Р±СЂРѕСЃР° D: [Рј]: ";
+	 private static String LABEL_V1="РћР±СЉРµРјРЅС‹Р№ СЂР°СЃС…РѕРґ РІС‹Р±СЂР°СЃС‹РІР°РµРјРѕР№ СЃРјРµСЃРё V1 [Рј\u00B3/СЃ]: ";
+	 private static String LABEL_TG="РўРµРјРїРµСЂР°С‚СѓСЂР° РіР°Р·РѕРІРѕР·РґСѓС€РЅРѕР№ СЃРјРµСЃРё TРі [\u00B0РЎ]: ";
 	 private static String LABEL_N3="n3 [%]: ";
-	 private static String LABEL_TV="Температура воздуха Тв [\u00B0С]: ";
-	 private static String LABEL_UM="Максимальная скорость ветра Uм [м/с]: ";
-	 private static String LABEL_U="Среднегодовая скорость ветра U [м/с]: ";
+	 private static String LABEL_TV="РўРµРјРїРµСЂР°С‚СѓСЂР° РІРѕР·РґСѓС…Р° РўРІ [\u00B0РЎ]: ";
+	 private static String LABEL_UM="РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РІРµС‚СЂР° UРј [Рј/СЃ]: ";
+	 private static String LABEL_U="РЎСЂРµРґРЅРµРіРѕРґРѕРІР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РІРµС‚СЂР° U [Рј/СЃ]: ";
 
 	private static  String H="50";
     private static  String D="40";
@@ -46,7 +46,7 @@ public class Elements extends JFrame {
 	public Elements(Company c){
 		
 		this.c=c;
-		setTitle("Перечень элементов "+c.getName()+ " ");
+		setTitle("РџРµСЂРµС‡РµРЅСЊ СЌР»РµРјРµРЅС‚РѕРІ "+c.getName()+ " ");
 		initComponents();	
 	    
 	}
@@ -70,7 +70,7 @@ public class Elements extends JFrame {
 	            l= new JLabel();
 	            Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
 	            l.setBorder(border);
-	            name=el.getName() +" [г/с]";
+	            name=el.getName() +" [Рі/СЃ]";
 	            if(el.isHot()){
 	            	name=name + " *";
 	            }
@@ -119,8 +119,8 @@ public class Elements extends JFrame {
 		 JLabel ln3 =new JLabel(LABEL_N3);
 		 JTextField n3 =new JTextField(); n3.setText(N3);
 		 p.add(ln3); p.add(n3);
-		 JLabel larea =new JLabel("Область : ");
-		 String[] areas = { "Брестская", "Витебская", "Гродненская", "Гомельская", "Минская", "Могилевская" };
+		 JLabel larea =new JLabel("РћР±Р»Р°СЃС‚СЊ : ");
+		 String[] areas = { "Р‘СЂРµСЃС‚СЃРєР°СЏ", "Р’РёС‚РµР±СЃРєР°СЏ", "Р“СЂРѕРґРЅРµРЅСЃРєР°СЏ", "Р“РѕРјРµР»СЊСЃРєР°СЏ", "РњРёРЅСЃРєР°СЏ", "РњРѕРіРёР»РµРІСЃРєР°СЏ" };
          p.add(larea); 
 	
 		 JComboBox areasList = new JComboBox(areas);
@@ -194,7 +194,7 @@ public class Elements extends JFrame {
 				}
 		    });
 		 
-		JButton set =new JButton("Рассчитать");
+		JButton set =new JButton("Р Р°СЃСЃС‡РёС‚Р°С‚СЊ");
 		set.addActionListener(new ActionListener() {
 			
 			@Override
@@ -272,6 +272,7 @@ private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elem
 		 
 	 }
 	 
+	 //Р Р°СЃСЃС‡РµС‚ РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ
 	 private void calculateConcentration(){
 		    c.setW0();
 			c.setDelt();
@@ -296,16 +297,17 @@ private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elem
 			System.out.println(" Vm: " +c.getVm());
 			System.out.println(" fe: " + c.getFe());
 			System.out.println(" m: " + c.getM());
-			System.out.println(" Xm горяч: " + c.getXmhot());
-			System.out.println(" Xm холодн: " + c.getXmcold());
-			System.out.println(" Um горяч: " + c.getUdhot());
-			System.out.println(" Um холодн: " + c.getUdcold());
-			System.out.println(" r горяч: " + c.getRhot());
-			System.out.println(" r холодн: " + c.getRcold());
-			System.out.println(" Xми горяч: " + c.getXmihot());
-			System.out.println(" Хми холодн: " + c.getXmicold());
+			System.out.println(" Xm РіРѕСЂСЏС‡: " + c.getXmhot());
+			System.out.println(" Xm С…РѕР»РѕРґРЅ: " + c.getXmcold());
+			System.out.println(" Um РіРѕСЂСЏС‡: " + c.getUdhot());
+			System.out.println(" Um С…РѕР»РѕРґРЅ: " + c.getUdcold());
+			System.out.println(" r РіРѕСЂСЏС‡: " + c.getRhot());
+			System.out.println(" r С…РѕР»РѕРґРЅ: " + c.getRcold());
+			System.out.println(" XРјРё РіРѕСЂСЏС‡: " + c.getXmihot());
+			System.out.println(" РҐРјРё С…РѕР»РѕРґРЅ: " + c.getXmicold());
 			
-			LinkedList<Element> elements=c.getElements();
+			//Р Р°СЃСЃС‡РµС‚ РєРѕРЅС†РµРЅС‚СЂР°С†РёРё РґР»СЏ РІСЃРµС… СЌР»РµРјРµРЅС‚РѕРІ РїСЂРµРґРїСЂРёСЏС‚РёСЏ
+		 LinkedList<Element> elements=c.getElements();
          Iterator iterator = elements.iterator();
          int i=0;
          while(iterator.hasNext()){
@@ -322,6 +324,7 @@ private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elem
          }
          c.setElements(elements);
          
+         //Р Р°СЃСЃС‡РµС‚ РєРѕРЅС†РµРЅС‚СЂР°С†РёРё РІ РЅРµСЃРєРѕР»СЊРєРёС… С‚РѕС‡РєР°С… 
          XY xy=new XY(30,50);
 			c.setXy(xy);
 			LinkedList<XY> lst = new LinkedList<>();
@@ -331,18 +334,6 @@ private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elem
 			lst.add(new XY(10,100));
 			lst.add(new XY(300,100));
 			c.setMap(lst);
-            
-		/*HashMap<XY,LinkedList<Element>>  map = c.getMap();        
-		Iterator<Map.Entry<XY,LinkedList<Element>>> iter =map.entrySet().iterator();
-        while(iter.hasNext()){
-     	   Entry<XY,LinkedList<Element>> entry = iter.next();
-
-     	           	System.out.println(entry.getKey());
-     	           	for(Element el:entry.getValue())
-     	            System.out.println(el);
-     	 
-     	   
-        }*/
 
          
          

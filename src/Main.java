@@ -1,13 +1,17 @@
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map.Entry;
-import java.util.Random;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class Main {
 
@@ -56,8 +60,8 @@ public static void main(String[] args) {
 			
 			String input = (String) JOptionPane.showInputDialog(
 			null, 
-			"Выберите предприятие",
-			"Выбор предприятия для постройки", 
+			"Р’С‹Р±РµСЂРёС‚Рµ РїСЂРµРґРїСЂРёСЏС‚РёРµ",
+			"Р’С‹Р±РѕСЂ РїСЂРµРґРїСЂРёСЏС‚РёСЏ РґР»СЏ РїРѕСЃС‚СЂРѕР№РєРё", 
 			JOptionPane.QUESTION_MESSAGE, 
 			null,                                                                                                    // icon
 			companies, 
@@ -73,7 +77,8 @@ public static void main(String[] args) {
 			
 			Elements fr  = new Elements(c); 
 					        SwingUtilities.invokeLater(new Runnable() {
-					           public void run() {
+					           @Override
+							public void run() {
 					              fr.setVisible(true);
 					           }
 					        });
