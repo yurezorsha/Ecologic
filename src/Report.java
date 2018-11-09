@@ -121,7 +121,7 @@ public class Report extends JFrame{
   
   public String getUz(ArrayList<String> names){
 	 String str="";
- 	 String str2 ="Σηρσμμ(";
+ 	 String str2 ="Uzsumm(";
  	 String str0="";
  	 double sumuz = 0;
 	  if(!names.isEmpty()){
