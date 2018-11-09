@@ -36,7 +36,6 @@ public class Report extends JFrame{
 
   
   public Report(Company c) throws HeadlessException {
-	super();
 	this.c = c;
 	HashMap<XY,LinkedList<Element>>  map = c.getMap();        
 	Iterator<Map.Entry<XY,LinkedList<Element>>> iter =map.entrySet().iterator();
@@ -48,39 +47,28 @@ public class Report extends JFrame{
   }
   
   private void initFrame(){
-	   //System.out.println(sumelem.get(0).toString());
       setLayout(new FlowLayout());
       setSize(1050, 900);
-      
-      
-      //setLayout();
       JPanel p1 = new JPanel();
       p1.setBounds(10, 10, 1000, 600);
       JPanel p2 =new JPanel();
       createTable(p1);
       p2.setBounds(10, 620, 350, 100);
-      //String[] s= {getUz(c.checkSum1()),getUz(c.checkSum2()),getUz(c.checkSum3()), getUz(c.checkSum4()), getUz(c.checkSum5())};
       createTableUz(p2, getStringsUz(sumelem));
       JPanel p4 = new JPanel();
       p4.setBounds(10 , 750, 700, 300);
       p4.setLayout(new GridLayout(0,1));
-      
-      
-         
-      //ModelTable model =new ModelTable(c.getMap().get(lst.get(0)),lst.get(0));
       JComboBox comboBox = new JComboBox();
-      comboBox.setBounds(10 , 720, 200, 30);
-		comboBox.setModel(new DefaultComboBoxModel(
+          		comboBox.setBounds(10 , 720, 200, 30);
+          		comboBox.setModel(new DefaultComboBoxModel(
 				lst.toArray()));
-		comboBox.setSelectedIndex(0);
+          		comboBox.setSelectedIndex(0);
 		
-		
-		model =new ModelTable(c.getMap().get(lst.get(0)),lst.get(0));
+          model =new ModelTable(c.getMap().get(lst.get(0)),lst.get(0));
 		  table =new JTable();
 	      table.setModel(model);
 	      table.setVisible(true);
-		comboBox.addActionListener(new ActionListener() {///////////////// choose function
-             
+		  comboBox.addActionListener(new ActionListener() {///////////////// choose function     
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				XY n = (XY) comboBox.getSelectedItem();
@@ -94,28 +82,16 @@ public class Report extends JFrame{
 	      p5.setBounds(10 , 720, 200, 30);
 	      p5.setLayout(new FlowLayout());
 	      p5.add(comboBox);
-	      
-      
-      
-        
-     
       p4.add(table);
-      
-     JScrollPane js = new JScrollPane(table);
-	
-	js.setBounds(10, 750, 400, 400);
-	js.setVisible(true);
+      JScrollPane js = new JScrollPane(table);
+	  js.setBounds(10, 750, 400, 400);
+	  js.setVisible(true);
       p4.add(js);
-		
-     
       JPanel p3 = new JPanel();
       p3.setBounds(380,620,350,100);
       createTableX(p3);
-      
-      
       JPanel p0=new JPanel();
       p0.setPreferredSize(new Dimension(1000,2000));
-      
       p0.setBounds(0, 0, 980, 1000);
       p0.setLayout(null); 
       p0.add(p1);
@@ -125,10 +101,7 @@ public class Report extends JFrame{
       p0.add(p5);
       
       JScrollPane scrollBar = new JScrollPane(p0, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-      //scrollBar.setBounds(0, 0, 1000, 700);
       scrollBar.setPreferredSize(new Dimension(1000,700));
-      
-           
       add(scrollBar);
 
       
@@ -156,7 +129,6 @@ public class Report extends JFrame{
 	         ArrayList<String> lst=names;
 	         for (String code: lst) {
 	        	   Element e = this.c.getElementByCode(code);
-	        	   //System.out.println(e.getUz());
 
 				   sumuz+= e.getUz(); 
 				   str2+= e.getCode()+" ";
@@ -167,7 +139,6 @@ public class Report extends JFrame{
 	         
 	         }
 	  else {str="";}
-	  //System.out.println(str);
 	  return str;
   }
   
@@ -227,7 +198,6 @@ public class Report extends JFrame{
       JLabel mpc;
       JLabel code;    
       p1.setLayout(new GridLayout(0,6));
-      //GridData g = new GridData();
       p1.add(new JLabel("Код"));
       p1.add(new JLabel("Элемент "));
       p1.add(new JLabel("Концентрация [г/м\u00B3]"));
@@ -238,7 +208,6 @@ public class Report extends JFrame{
          Element el=(Element) iterator.next();
          
          String name="";
-          //System.out.println("Element :" + el.getCode()+" Concentration " +el.getMass());
           l= new JLabel();
           
           code =new JLabel(el.getCode());
@@ -277,9 +246,6 @@ public class Report extends JFrame{
           }
                    p1.add(uz);
           
-          
-          
-         
       }
       
   }
