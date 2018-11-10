@@ -1,3 +1,4 @@
+package Forms;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -23,8 +24,15 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
+import Calculations.Company;
+import Calculations.Element;
+import Calculations.SumElem;
+import Calculations.XY;
+import DataFromExcel.CatalogOfElements;
+import Models.ModelTable;
 
-public class Report extends JFrame{
+
+public class FormReport extends JFrame{
   private Company c;
   private Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
   private ArrayList<SumElem> sumelem=CatalogOfElements.getInstance().sumelem;
@@ -35,7 +43,7 @@ public class Report extends JFrame{
   
 
   
-  public Report(Company c) throws HeadlessException {
+  public FormReport(Company c) throws HeadlessException {
 	this.c = c;
 	HashMap<XY,LinkedList<Element>>  map = c.getMap();        
 	Iterator<Map.Entry<XY,LinkedList<Element>>> iter =map.entrySet().iterator();

@@ -1,7 +1,11 @@
+package Models;
 import java.util.LinkedList;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
+
+import Calculations.Element;
+import Calculations.XY;
 
 public class ModelTable extends AbstractTableModel{
 

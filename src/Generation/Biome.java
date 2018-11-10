@@ -1,3 +1,4 @@
+package Generation;
 public enum Biome{
     RIVER, DESERT, PLAIN, FOREST, BRUSH, TAIGA, MOUNT, SNOW, SITY;
 

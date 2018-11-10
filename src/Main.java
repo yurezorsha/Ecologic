@@ -13,6 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import Calculations.Company;
+import DataFromExcel.ExcelParser;
+import Forms.FormElements;
+import Generation.Terrain;
+
 public class Main {
 
 public static void main(String[] args) {
@@ -75,7 +80,7 @@ public static void main(String[] args) {
 				e1.printStackTrace();
 			}
 			
-			Elements fr  = new Elements(c); 
+			FormElements fr  = new FormElements(c); 
 					        SwingUtilities.invokeLater(new Runnable() {
 					           @Override
 							public void run() {

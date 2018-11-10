@@ -1,3 +1,4 @@
+package Forms;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -18,8 +19,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
+import Calculations.Company;
+import Calculations.Element;
+import Calculations.XY;
+import DataFromExcel.CatalogOfElements;
 
-public class Elements extends JFrame {
+
+public class FormElements extends JFrame {
 	 private static String LABEL_H="Высота источника выброса H [м]: ";
 	 private static String LABEL_D="Диаметр источника выброса D: [м]: ";
 	 private static String LABEL_V1="Объемный расход выбрасываемой смеси V1 [м\u00B3/с]: ";
@@ -43,7 +49,7 @@ public class Elements extends JFrame {
     private JPanel p1;
     private JPanel p2;
     
-	public Elements(Company c){
+	public FormElements(Company c){
 		
 		this.c=c;
 		setTitle("Перечень элементов "+c.getName()+ " ");
@@ -205,7 +211,7 @@ public class Elements extends JFrame {
 				calculateConcentration();
                //System.out.println("uz= "+c.getElementByCode("0301").getUz());
 
-				Report fr  = new Report(c); 
+				FormReport fr  = new FormReport(c); 
 		        SwingUtilities.invokeLater(new Runnable() {
 		           @Override
 				public void run() {

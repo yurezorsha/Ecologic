@@ -1,3 +1,4 @@
+package Calculations;
 
 public class XY {
 	private int  x;
