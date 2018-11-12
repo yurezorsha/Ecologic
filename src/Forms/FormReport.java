@@ -125,7 +125,7 @@ public class FormReport extends JFrame {
 
 	public String getUz(ArrayList<String> names) {
 		String str = "";
-		String str2 = "Узсумм ( ";
+		String str2 = "РЈР·СЃСѓРјРј ( ";
 		String str0 = "";
 		double sumuz = 0;
 		if (!names.isEmpty()) {
@@ -158,7 +158,7 @@ public class FormReport extends JFrame {
 		}
 
 		if (b) {
-			p.add(new JLabel("Вещества обладающие эффектом суммации:"));
+			p.add(new JLabel("Р’РµС‰РµСЃС‚РІР° РѕР±Р»Р°РґР°СЋС‰РёРµ СЌС„С„РµРєС‚РѕРј СЃСѓРјРјР°С†РёРё:"));
 			p.setBackground(Color.WHITE);
 			i = 1;
 		}
@@ -179,21 +179,21 @@ public class FormReport extends JFrame {
 	public void createTableX(JPanel p) {
 		p.setBackground(Color.WHITE);
 		p.setLayout(new GridLayout(0, 2));
-		JLabel lh = new JLabel("Горячие выбросы [м]");
+		JLabel lh = new JLabel("Р“РѕСЂСЏС‡РёРµ РІС‹Р±СЂРѕСЃС‹ [Рј]");
 		lh.setBorder(border);
-		JLabel lc = new JLabel("Холодные выбросы [v]");
+		JLabel lc = new JLabel("РҐРѕР»РѕРґРЅС‹Рµ РІС‹Р±СЂРѕСЃС‹ [Рј]");
 		lc.setBorder(border);
 		p.add(lh);
 		p.add(lc);
-		JLabel xmh = new JLabel("Xм = " + c.getXmhot());
+		JLabel xmh = new JLabel("XРј = " + c.getXmhot());
 		xmh.setBorder(border);
-		JLabel xmc = new JLabel("Хм = " + c.getXmcold());
+		JLabel xmc = new JLabel("РҐРј = " + c.getXmcold());
 		xmc.setBorder(border);
 		p.add(xmh);
 		p.add(xmc);
-		JLabel xmih = new JLabel("Хми = " + c.getXmihot());
+		JLabel xmih = new JLabel("РҐРјРё = " + c.getXmihot());
 		xmih.setBorder(border);
-		JLabel xmic = new JLabel("Хми = " + c.getXmicold());
+		JLabel xmic = new JLabel("РҐРјРё = " + c.getXmicold());
 		xmic.setBorder(border);
 		p.add(xmih);
 		p.add(xmic);
@@ -211,12 +211,12 @@ public class FormReport extends JFrame {
 		JLabel mpc;
 		JLabel code;
 		p1.setLayout(new GridLayout(0, 6));
-		p1.add(new JLabel("Код"));
-		p1.add(new JLabel("Элемент "));
-		p1.add(new JLabel("Концентрация [г/м\u00B3]"));
-		p1.add(new JLabel("Сми [г/м\u00B3]"));
-		p1.add(new JLabel("ПДК [г/м\u00B3]"));
-		p1.add(new JLabel("Уровень загрязнения "));
+		p1.add(new JLabel("РљРѕРґ"));
+		p1.add(new JLabel("Р­Р»РµРјРµРЅС‚ "));
+		p1.add(new JLabel("РљРѕРЅС†РµРЅС‚СЂР°С†РёСЏ [Рі/Рј\u00B3]"));
+		p1.add(new JLabel("РЎРјРё [Рі/Рј\u00B3]"));
+		p1.add(new JLabel("РџР”Рљ [Рі/Рј\u00B3]"));
+		p1.add(new JLabel("РЈСЂРѕРІРµРЅСЊ Р·Р°РіСЂСЏР·РЅРµРЅРёСЏ "));
 		while (iterator.hasNext()) {
 			Element el = (Element) iterator.next();
 
