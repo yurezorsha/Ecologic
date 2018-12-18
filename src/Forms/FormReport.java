@@ -102,8 +102,8 @@ public class FormReport extends JFrame {
 		p5.setBounds(10, 420, 900, 30);
 		p5.setLayout(new FlowLayout());
 		
-		JLabel point=new JLabel(" РљРѕРѕСЂРґРёРЅР°С‚С‹ РёСЃС‚РѕС‡РЅРёРєР° РІС‹Р±СЂРѕСЃР°: X= "+c.getXy().getX()+" Y= " + c.getXy().getY() );
-		JLabel points=new JLabel(" РџСЂРѕРІРµСЂСЏРµРјС‹Рµ С‚РѕС‡РєРё: ");
+		JLabel point=new JLabel(" Координаты источника выброса: X= "+c.getXy().getX()+" Y= " + c.getXy().getY() );
+		JLabel points=new JLabel(" Координаты проверяемой точки: ");
 		p5.add(point);
 		p5.add(points);
 		p5.add(comboBox);
