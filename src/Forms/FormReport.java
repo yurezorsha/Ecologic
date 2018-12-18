@@ -102,8 +102,8 @@ public class FormReport extends JFrame {
 		p5.setBounds(10, 420, 900, 30);
 		p5.setLayout(new FlowLayout());
 		
-		JLabel point=new JLabel(" Координаты источника выброса: X= "+c.getXy().getX()+" Y= " + c.getXy().getY() );
-		JLabel points=new JLabel(" Проверяемые точки: ");
+		JLabel point=new JLabel(" РљРѕРѕСЂРґРёРЅР°С‚С‹ РёСЃС‚РѕС‡РЅРёРєР° РІС‹Р±СЂРѕСЃР°: X= "+c.getXy().getX()+" Y= " + c.getXy().getY() );
+		JLabel points=new JLabel(" РџСЂРѕРІРµСЂСЏРµРјС‹Рµ С‚РѕС‡РєРё: ");
 		p5.add(point);
 		p5.add(points);
 		p5.add(comboBox);
@@ -146,7 +146,7 @@ public class FormReport extends JFrame {
 
 	public String getUz(ArrayList<String> names) {
 		String str = "";
-		String str2 = "Узсумм ( ";
+		String str2 = "РЈР·СЃСѓРјРј ( ";
 		String str0 = "";
 		double sumuz = 0;
 		if (!names.isEmpty()) {
