@@ -22,7 +22,7 @@ public class ModelTable extends AbstractTableModel{
 		this.xy=xy;
 		    columnNames = new Vector<String>();
 		    columnNames.add("Код" );
-		    columnNames.add("Название элемента " );
+		    columnNames.add("Элемент " );
 			columnNames.add("C ("+ xy +") [г/с\u00B3]" );
 			columnNames.add("Cp ("+ xy +") [г/с\u00B3]");
 		    columnNames.add("ПДКcc [г/с\u00B3]");

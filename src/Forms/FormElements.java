@@ -37,11 +37,11 @@ public class FormElements extends JFrame {
 	 private static String LABEL_UM="Максимальная скорость ветра Uм [м/с]: ";
 	 private static String LABEL_U="Среднегодовая скорость ветра U [м/с]: ";
 
-	private static  String H="50";
-    private static  String D="40";
-    private static  String V1="400";
-    private static  String TG="120";
-    private static  String N3="0.80";
+	private static  String H="0.0";
+    private static  String D="0.0";
+    private static  String V1="0.0";
+    private static  String TG="0.0";
+    private static  String N3="0.0";
     private static  String TV="24";
     private static  String UM="24";
     private static  String U="2";
@@ -53,6 +53,7 @@ public class FormElements extends JFrame {
     private XY xy;
     
 	public FormElements(Company c, XY xy){
+		setTitle("Перечень элементов и начальных условий");
 		setResizable(false);
 		this.xy=xy;
 		System.out.println(xy.getX() +" " +xy.getY());

@@ -28,6 +28,7 @@ public static void main(String[] args) {
 	Terrain terrain = new Terrain(800, 400, gridSize);
 	JFrame frame = new JFrame();
 	frame.setResizable(false);
+	frame.setTitle("Карта местности");
 	
 	
 	JLabel label = new JLabel();
@@ -127,12 +128,12 @@ public static void main(String[] args) {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			if(e.getKeyChar() == 'v')
+		/*	if(e.getKeyChar() == 'v')
 				terrain.zoom(3);
 			if(e.getKeyChar() == 'c'){
                 terrain.mode++;
                 terrain.repaint();
-            }
+            }*/
 		}
 
 		@Override

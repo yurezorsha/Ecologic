@@ -46,6 +46,7 @@ public class FormReport extends JFrame {
 	public FormReport(Company c) throws HeadlessException {
 		this.c = c;
 		setResizable(false);
+		setTitle("Отчет по уровню загрязнения");
 		HashMap<XY, LinkedList<Element>> map = c.getMap();
 		Iterator<Map.Entry<XY, LinkedList<Element>>> iter = map.entrySet().iterator();
 		while (iter.hasNext()) {
@@ -146,7 +147,7 @@ public class FormReport extends JFrame {
 
 	public String getUz(ArrayList<String> names) {
 		String str = "";
-		String str2 = "РЈР·СЃСѓРјРј ( ";
+		String str2 = "УЗсумм ( ";
 		String str0 = "";
 		double sumuz = 0;
 		if (!names.isEmpty()) {
