@@ -22,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import Calculations.Company;
@@ -30,7 +29,10 @@ import Calculations.Element;
 import Calculations.SumElem;
 import Calculations.XY;
 import DataFromExcel.CatalogOfElements;
+import Models.ModelResultConcentrationTable;
 import Models.ModelTable;
+import Models.ModelTableUz;
+import Models.ModelTableX;
 
 public class FormReport extends JFrame {
 	private Company c;
@@ -43,6 +45,7 @@ public class FormReport extends JFrame {
 
 	public FormReport(Company c) throws HeadlessException {
 		this.c = c;
+		setResizable(false);
 		HashMap<XY, LinkedList<Element>> map = c.getMap();
 		Iterator<Map.Entry<XY, LinkedList<Element>>> iter = map.entrySet().iterator();
 		while (iter.hasNext()) {
@@ -54,16 +57,22 @@ public class FormReport extends JFrame {
 
 	private void initFrame() {
 		setLayout(new FlowLayout());
-		setSize(1050, 900);
+		setSize(1000, 750);
+		
 		JPanel p1 = new JPanel();
-		p1.setBounds(10, 10, 1000, 600);
-		JPanel p2 = new JPanel();
+		p1.setBounds(10, 10, 950, 300);
+		p1.setLayout(new GridLayout(0,1));
 		createTable(p1);
-		p2.setBounds(10, 620, 350, 100);
+		
+		JPanel p2 = new JPanel();
+		p2.setBounds(10, 320, 450, 100);
+		p2.setLayout(new GridLayout(0,1));
 		createTableUz(p2, getStringsUz(sumelem));
+		
 		JPanel p4 = new JPanel();
-		p4.setBounds(10, 750, 700, 300);
+		p4.setBounds(10, 450, 950, 300);
 		p4.setLayout(new GridLayout(0, 1));
+		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(10, 720, 200, 30);
 		comboBox.setModel(new DefaultComboBoxModel(lst.toArray()));
@@ -73,7 +82,7 @@ public class FormReport extends JFrame {
 		table = new JTable();
 		table.setModel(model);
 		table.setVisible(true);
-		comboBox.addActionListener(new ActionListener() {///////////////// choose function
+		comboBox.addActionListener(new ActionListener() {///////////////// choose POINT
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				XY n = (XY) comboBox.getSelectedItem();
@@ -82,22 +91,33 @@ public class FormReport extends JFrame {
 				table.setModel(model);
 			}
 		});
-
-		JPanel p5 = new JPanel();
-		p5.setBounds(10, 720, 200, 30);
-		p5.setLayout(new FlowLayout());
-		p5.add(comboBox);
+		
 		p4.add(table);
 		JScrollPane js = new JScrollPane(table);
 		js.setBounds(10, 750, 400, 400);
 		js.setVisible(true);
 		p4.add(js);
+
+		JPanel p5 = new JPanel();
+		p5.setBounds(10, 420, 900, 30);
+		p5.setLayout(new FlowLayout());
+		
+		JLabel point=new JLabel(" Координаты источника выброса: X= "+c.getXy().getX()+" Y= " + c.getXy().getY() );
+		JLabel points=new JLabel(" Проверяемые точки: ");
+		p5.add(point);
+		p5.add(points);
+		p5.add(comboBox);
+		
+		
+		
 		JPanel p3 = new JPanel();
-		p3.setBounds(380, 620, 350, 100);
+		p3.setBounds(470, 320, 490, 100);
+		p3.setLayout(new GridLayout(0, 1));
 		createTableX(p3);
+		
 		JPanel p0 = new JPanel();
-		p0.setPreferredSize(new Dimension(1000, 2000));
-		p0.setBounds(0, 0, 980, 1000);
+		p0.setPreferredSize(new Dimension(1000, 800));
+		p0.setBounds(0, 0, 960, 800);
 		p0.setLayout(null);
 		p0.add(p1);
 		p0.add(p2);
@@ -112,6 +132,7 @@ public class FormReport extends JFrame {
 
 	}
 
+	//sum uz list
 	public ArrayList<String> getStringsUz(ArrayList<SumElem> sumel) {
 		ArrayList<String> lst = new ArrayList<String>();
 		for (SumElem el : sumel) {
@@ -147,120 +168,50 @@ public class FormReport extends JFrame {
 		return str;
 	}
 
+	//table sum UZ
 	public void createTableUz(JPanel p, ArrayList<String> s) {
-		boolean b = false;
-		int i = 0;
-
-		for (String str : s) {
-			if (!str.equals(""))
-				b = true;
-			break;
-		}
-
-		if (b) {
-			p.add(new JLabel("Вещества обладающие эффектом суммации:"));
-			p.setBackground(Color.WHITE);
-			i = 1;
-		}
-		for (String str : s) {
-			if (str.equals("")) {
-
-			} else {
-				i++;
-				JLabel lb = new JLabel(str, SwingConstants.CENTER);
-				lb.setBorder(border);
-				p.setLayout(new GridLayout(i, 1));
-				p.add(lb);
-			}
-		}
+		
+		ModelTableUz model = new ModelTableUz(s);
+		JTable table=new JTable();
+		table.setModel(model);
+		p.add(table);
+		JScrollPane js = new JScrollPane(table);
+		js.setBounds(10, 400, 200, 200);
+		js.setVisible(true);
+		p.add(js);
+		table.setVisible(true);
+		
 
 	}
 
+	//table X
 	public void createTableX(JPanel p) {
-		p.setBackground(Color.WHITE);
-		p.setLayout(new GridLayout(0, 2));
-		JLabel lh = new JLabel("Горячие выбросы [м]");
-		lh.setBorder(border);
-		JLabel lc = new JLabel("Холодные выбросы [м]");
-		lc.setBorder(border);
-		p.add(lh);
-		p.add(lc);
-		JLabel xmh = new JLabel("Xм = " + c.getXmhot());
-		xmh.setBorder(border);
-		JLabel xmc = new JLabel("Хм = " + c.getXmcold());
-		xmc.setBorder(border);
-		p.add(xmh);
-		p.add(xmc);
-		JLabel xmih = new JLabel("Хми = " + c.getXmihot());
-		xmih.setBorder(border);
-		JLabel xmic = new JLabel("Хми = " + c.getXmicold());
-		xmic.setBorder(border);
-		p.add(xmih);
-		p.add(xmic);
+		ModelTableX model = new ModelTableX(c);
+		JTable table=new JTable();
+		table.setModel(model);
+		p.add(table);
+		JScrollPane js = new JScrollPane(table);
+		js.setBounds(470, 320, 500, 100);
+		js.setVisible(true);
+		p.add(js);
+		table.setVisible(true);
+		
 
 	}
 
+	//table concentration
 	public void createTable(JPanel p1) {
 		LinkedList<Element> elements = c.getElements();
-		Iterator iterator = elements.iterator();
-		p1.setBackground(Color.WHITE);
-		JLabel l;
-		JLabel cm;
-		JLabel cmi;
-		JLabel uz;
-		JLabel mpc;
-		JLabel code;
-		p1.setLayout(new GridLayout(0, 6));
-		p1.add(new JLabel("Код"));
-		p1.add(new JLabel("Элемент "));
-		p1.add(new JLabel("Концентрация [г/м\u00B3]"));
-		p1.add(new JLabel("Сми [г/м\u00B3]"));
-		p1.add(new JLabel("ПДК [г/м\u00B3]"));
-		p1.add(new JLabel("Уровень загрязнения "));
-		while (iterator.hasNext()) {
-			Element el = (Element) iterator.next();
-
-			String name = "";
-			l = new JLabel();
-
-			code = new JLabel(el.getCode());
-			code.setBorder(border);
-			p1.add(code);
-			l.setBorder(border);
-			name = el.getName();
-			if (el.isHot()) {
-				name = name + " *";
-			}
-			l.setText(name);
-			p1.add(l);
-			cm = new JLabel();
-			cm.setBorder(border);
-			cm.setText(Double.toString(el.getCm()));
-			p1.add(cm);
-			cmi = new JLabel();
-			cmi.setBorder(border);
-			cmi.setText(Double.toString(el.getCmi()));
-			p1.add(cmi);
-			mpc = new JLabel();
-			mpc.setBorder(border);
-			mpc.setText(Double.toString(el.getMPC()));
-			p1.add(mpc);
-			uz = new JLabel();
-			uz.setBorder(border);
-			String uzresult = Double.toString(el.getUz());
-			uz.setOpaque(true);
-			if (el.getUz() > 1) {
-				uzresult = uzresult + " >1";
-				uz.setBackground(Color.RED);
-				uz.setText(uzresult);
-			} else {
-				uz.setText(uzresult);
-				uz.setBackground(null);
-			}
-			p1.add(uz);
-
-		}
-
+		ModelResultConcentrationTable model = new ModelResultConcentrationTable(elements);
+		JTable table=new JTable();
+		table.setModel(model);
+		p1.add(table);
+		JScrollPane js = new JScrollPane(table);
+		js.setBounds(10, 10, 400, 400);
+		js.setVisible(true);
+		p1.add(js);
+		table.setVisible(true);
+		
 	}
 
 }
