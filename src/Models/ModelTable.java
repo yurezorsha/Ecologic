@@ -6,6 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 import Calculations.Element;
 import Calculations.XY;
+import DataFromExcel.CatalogOfElements;
 
 public class ModelTable extends AbstractTableModel{
 
@@ -20,16 +21,18 @@ public class ModelTable extends AbstractTableModel{
 		this.elem=elem;
 		this.xy=xy;
 		    columnNames = new Vector<String>();
-		    columnNames.add("Код элемента" );
+		    columnNames.add("Код" );
+		    columnNames.add("Название элемента " );
 			columnNames.add("C ("+ xy +") [г/с\u00B3]" );
 			columnNames.add("Cp ("+ xy +") [г/с\u00B3]");
-		    columnNames.add("Ccc [г/с\u00B3]");
+		    columnNames.add("ПДКcc [г/с\u00B3]");
+		    columnNames.add("Вывод ");
 		
 			}
 
 	@Override
 	public int getColumnCount() {
-		return 4;
+		return 6;
 	}
 		
 	public LinkedList<Element> getElem() {
@@ -62,15 +65,27 @@ public class ModelTable extends AbstractTableModel{
 	@Override
 	public Object getValueAt(int i, int j) {
 		String value;
-		if(j == 0)
+		if(j == 0){
 			value = elem.get(i).getCode();
+		}
 		else if (j==1) {
+			value = CatalogOfElements.getInstance().getElementByCode(elem.get(i).getCode()).getName();
+		}
+		
+		else if (j==2) {
 				value = String.valueOf(elem.get(i).getC());
-			} else if(j==2){
+			} else if(j==3){
 				    value = String.valueOf(elem.get(i).getCp());
-			}else{
+			} else if(j==4){
 				 value = String.valueOf(elem.get(i).getCcc());
+			} else{
+				if(elem.get(i).getCp()<=elem.get(i).getCcc()){
+				  value = "Концентрация в норме";
+				}else{
+					value ="Cp > ПДКсс";
+				}
 			}
+		
 	
 		return value;
 	}

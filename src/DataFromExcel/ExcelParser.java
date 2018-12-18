@@ -91,7 +91,7 @@ public class ExcelParser {
             if(n!=null && s!=null && b!=null){
             	Element elem =new Element();
             	elem.setCode(s);
-            	elem.setMass(n);
+            	elem.setMass(0D);
                 elem.setHot(b);
             	elem.setName(catalog.getElementByCode(s).getName());
             	elem.setMPC(catalog.getElementByCode(elem.getCode()).getMPC());

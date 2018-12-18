@@ -14,10 +14,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+import javax.swing.text.AbstractDocument;
 
 import Calculations.Company;
 import Calculations.Element;
@@ -48,9 +50,12 @@ public class FormElements extends JFrame {
     private CatalogOfElements catalog = CatalogOfElements.getInstance();
     private JPanel p1;
     private JPanel p2;
+    private XY xy;
     
-	public FormElements(Company c){
-		
+	public FormElements(Company c, XY xy){
+		setResizable(false);
+		this.xy=xy;
+		System.out.println(xy.getX() +" " +xy.getY());
 		this.c=c;
 		setTitle("Перечень элементов "+c.getName()+ " ");
 		initComponents();	
@@ -60,14 +65,15 @@ public class FormElements extends JFrame {
 	 private void initComponents() {
             LinkedList<Element> elements=c.getElements();
             Iterator iterator = elements.iterator();
-            setSize(1050, 650);
+            setSize(1220, 650);
 	        JLabel l;
 	        JTextField t;
 	        
 	        setLayout(null);
 	        p1=new JPanel();
-	        p1.setBounds(10, 10, 400, 600);
-	        p1.setLayout(new GridLayout(0,2));
+	        p1.setBounds(10, 10, 550, 600);
+	       	p1.setLayout(new GridLayout(0, 2));
+	        
 	        
 	        while(iterator.hasNext()){
 	           Element el=(Element) iterator.next();
@@ -85,6 +91,8 @@ public class FormElements extends JFrame {
 	            t= new JTextField();
 	            t.setBorder(border);
 	            t.setText(el.getMass().toString());
+	            //t.setText("");
+	            ((AbstractDocument)t.getDocument()).setDocumentFilter(new Models.MyDocumentFilter());
 	            p1.add(t);
 	            
 	           
@@ -105,25 +113,30 @@ public class FormElements extends JFrame {
 	 
 	 private JPanel panel2(){
 		 JPanel p =new JPanel();
-		 p.setBounds(415, 10, 620, 250);
+		 p.setBounds(565, 10, 620, 250);
 		 p.setLayout(new GridLayout(0,2));
 		// p.setSize(new Dimension(100, 200));
 		
 		 JLabel lh =new JLabel(LABEL_H);
 		 JTextField h =new JTextField(); h.setText(H);
+         ((AbstractDocument)h.getDocument()).setDocumentFilter(new Models.MyDocumentFilter());
 		 p.add(lh); p.add(h); 
 		 JLabel ld =new JLabel(LABEL_D);
 		 JTextField d =new JTextField(); d.setText(D);
+         ((AbstractDocument)d.getDocument()).setDocumentFilter(new Models.MyDocumentFilter());
 		 p.add(ld); p.add(d);
 		 JLabel lv1 =new JLabel(LABEL_V1);
 		 JTextField v1 =new JTextField(); v1.setText(V1);
-		 
+         ((AbstractDocument)v1.getDocument()).setDocumentFilter(new Models.MyDocumentFilter());
+
 		 p.add(lv1); p.add(v1);
 		 JLabel ltg =new JLabel(LABEL_TG);
 		 JTextField tg =new JTextField(); tg.setText(TG);
+         ((AbstractDocument)tg.getDocument()).setDocumentFilter(new Models.MyDocumentFilter());
 		 p.add(ltg); p.add(tg);
 		 JLabel ln3 =new JLabel(LABEL_N3);
 		 JTextField n3 =new JTextField(); n3.setText(N3);
+         ((AbstractDocument)n3.getDocument()).setDocumentFilter(new Models.MyDocumentFilter());
 		 p.add(ln3); p.add(n3);
 		 JLabel larea =new JLabel("Область : ");
 		 String[] areas = { "Брестская", "Витебская", "Гродненская", "Гомельская", "Минская", "Могилевская" };
@@ -189,9 +202,6 @@ public class FormElements extends JFrame {
 					
 					break;
 
-
-					
-
 				default:
 					
 					break;
@@ -205,19 +215,29 @@ public class FormElements extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//System.out.println("Click");
+				
+				try{
 				c.setElements(getListofElements(p1, c.getElements()));
 				getParameters(p);
 				calculateConcentration();
-               //System.out.println("uz= "+c.getElementByCode("0301").getUz());
+
 
 				FormReport fr  = new FormReport(c); 
 		        SwingUtilities.invokeLater(new Runnable() {
 		           @Override
 				public void run() {
-		              fr.setVisible(true);
+		        	    fr.setLocationRelativeTo(null);
+		        		fr.setVisible(true);
 		           }
-		        });	
+		        });
+				}
+				 catch(Exception e){
+						JOptionPane j = new JOptionPane();
+						j.showMessageDialog(new JFrame(), "Заполните, пожалуйста, все поля!", "Ошибка",
+								JOptionPane.ERROR_MESSAGE);
+						
+				 
+				 }
 				
 				
 			}
@@ -229,11 +249,13 @@ public class FormElements extends JFrame {
 		 	 
 	 }
 	 
-private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elements){
+     private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elements){
 		 
+	
 		 LinkedList<Double> mas=new LinkedList<Double>(); 
 		 Component[] c=p.getComponents();
 		 int size=c.length;
+		 
 		 for(int i = 0; i<size;i++){
 			 if(c[i] instanceof JTextField){
 				 JTextField f=(JTextField) c[i];
@@ -243,6 +265,7 @@ private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elem
 		 }
 		 Iterator iterator = elements.iterator();
 		 int i=0;
+		 
 		 while(iterator.hasNext() ){
 			 Element el=(Element) iterator.next();
 			 el.setMass(mas.get(i));			 
@@ -250,11 +273,11 @@ private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elem
 			 i++;
 
 		 }
+	
 		 
-		 return elements;
-		 
-		 
-	 }
+	 return elements;
+	 
+     }
 
 	 
 	 private void getParameters(JPanel p){
@@ -331,14 +354,15 @@ private LinkedList<Element> getListofElements(JPanel p, LinkedList<Element> elem
          c.setElements(elements);
          
          //Рассчет концентрации в нескольких точках 
-         XY xy=new XY(30,50);
-			c.setXy(xy);
+       
+			c.setXy(this.xy);
 			LinkedList<XY> lst = new LinkedList<>();
 			lst.add(new XY(40,100));
 			lst.add(new XY(100,100));
 			lst.add(new XY(200,100));
 			lst.add(new XY(10,100));
 			lst.add(new XY(300,100));
+			lst.add(new XY(500,500));
 			c.setMap(lst);
 
          

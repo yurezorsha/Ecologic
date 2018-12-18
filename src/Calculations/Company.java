@@ -493,10 +493,9 @@ public class Company {
 			double cp= s2*c;
 			temm_el.add(new Element(el.getCode(),c,cp,el.getCcc()));
 			
-        
 			
 		}
-		//System.out.println(t_xy);
+	
 		map.put(t_xy, temm_el);
 		}
 		
@@ -563,7 +562,7 @@ public class Company {
 	}
 	
 	public double s2(double ty){
-		return 1/(1+5*ty+12.8*Math.pow(ty,2)+17*Math.pow(ty, 3) +45.1*Math.pow(ty,4));
+		return 1/Math.pow((1+5*ty+12.8*Math.pow(ty,2)+17*Math.pow(ty, 3) +45.1*Math.pow(ty,4)),2);
 	}
 	
 		
